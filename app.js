@@ -4,8 +4,32 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+//
+var app = express();
+// auth
 var passport = require('passport');
-
+app.use(require('express-session')({
+	  secret: 'keyboard cat',
+	    resave: true,
+		  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+function isAuthenticated(req, res, next){
+	if (req.isAuthenticated()) {  // 認証済
+		return next();
+	}
+	else {  // 認証されていない
+		res.redirect('/login');  // ログイン画面に遷移
+	}
+}
+//
+passport.serializeUser(function(user, done) {
+	    done(null, user);
+});
+passport.deserializeUser(function(user, done) {
+	    done(null, user);
+});
 // pages
 var index = require('./routes/index');
 var register_user = require('./routes/register_user');
@@ -20,7 +44,6 @@ var dashboard = require('./routes/dashboard');
 var company_edit = require('./routes/company_edit');
 var job_edit = require('./routes/job_edit');
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
