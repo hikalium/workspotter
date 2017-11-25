@@ -1,0 +1,21 @@
+<h1>応募者情報</h1>
+<table>
+    <tr>
+        <th>ユーザID</th>
+        <td><%= user.id %></td>
+    </tr>
+    <tr>
+        <th>名前</th>
+        <td><%= user.name %></td>
+    </tr>
+    <tr>
+        <th rowspan="3">レート</th>
+        <%= user.rates.1.category_id %>
+        <% for (var rate in user.rates) { %>
+            <tr>
+                <th><%= rate.category_id %></th>
+                <td><%= rate.rate %></td>
+            </tr>
+        <% } %>
+    </tr>
+</table>
