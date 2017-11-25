@@ -1,8 +1,25 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html, body{
+  height:100%;
 }
 
-a {
-  color: #00B7FF;
+body{
+	background: #bfd3c1;
+	color: rgb(1, 41, 39);
+	font-family: 'mgenplus-p-w', 'Noto Sans CJK JP', '源ノ角ゴシック', 'Source Han Sans', '源真ゴシック', 'GenShinGothic', 'M+ 2c', 'Mgen+ 2c', 'Hiragino Sans', 'ヒラギノ角ゴシック', 'ヒラギノ角ゴ Pro W3' ,'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'GenShinGothic-w', sans-serif;
+  font-weight: 400;
+}
+
+header{
+  height: 8%;
+  padding: 0.5% 0;
+  background-color: #ffffffa6;
+  margin-bottom: 1%;
+}
+
+#logo{
+  background: url("/images/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: auto;
+  height: 100%;
 }
