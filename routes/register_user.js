@@ -17,7 +17,7 @@ router.post('/', function (req, res, next) {
 
     db.get('SELECT * FROM user WHERE name = ?', username, function(err, row) {
         if (!row) {
-            db.run('INSERT INTO USER(name, password, isCompany) VALUES(?, ?, 1)', username, password);
+            db.run('INSERT INTO USER(name, password, isCompany) VALUES(?, ?, 0)', username, password);
             console.log("User " + username + " added");
 
             res.redirect("/login");
