@@ -5,7 +5,7 @@ var passport = require('passport');
 var router = express.Router();
 
 
-var db = new sqlite3.Database('');
+var db = new sqlite3.Database('./workspotter.sqlite3');
 
 
 /* GET home page. */
@@ -17,16 +17,31 @@ router.get('/', function(req, res, next) {
 router.use(passport.initialize());
 var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy(function(username, password, done){
-    console.log(username + " " + password);
+    console.log(db);
+    db.get('SELECT * FROM user WHERE name = ?', username, function(err, row) {
+        if (!row) {
+            console.log("login fail");
+            return done(null, false);
+        }
+        else {
+            console.log("login success");
+            return done(null, row);
+        }
+    });
 }));
 
-router.post('/test',
-    passport.authenticate('local', {
-        failureRedirect: '/◆◆',  // 失敗したときの遷移先
-    }),
-    function(req, res){
-        //成功時
-    }
-);
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
 
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+router.post('/login',
+    passport.authenticate('local', {
+        failureRedirect: '',
+        successRedirect: '/index',
+    })
+);
 module.exports = router;
