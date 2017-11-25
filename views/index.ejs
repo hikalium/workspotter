@@ -1,4 +1,51 @@
 <% include _header %>
-    <p>Welcome to INDEX.</p>
+<script>
+var days = ["日", "月", "火", "水", "木", "金", "土"];
+var timeMax = 24 * 60;
+var freetimes = [
+	<% for (var item of freetimes) { %>
+		[
+			<%= item.day %>,
+			<%= item.from_hour %> * 60 + <%= item.from_minute %>,
+			<%= item.to_hour %> * 60 + <%= item.to_minute %>
+		],
+	<% } %>
+]
+onload = function(){
+	var tlRow = $("#tlrow");
+	for(var i = 1; i < 8; i++){
+		var dayId = i % 7;
+		var dayStr = days[dayId];
+		tlRow.append(
+				$('<div/>', {class: "tt-header col-md-1 col-lg-1"}).text(dayStr)
+				);
+		tlRow.append(
+				$('<div/>', {class: "tt-timeline col-md-11 col-lg-11", id: "tl" + dayId})
+				);
+		//append('<div class="col-md-11 col-lg-11 tt-timeline">')*/
 
+	}
+	//
+	console.log(freetimes);
+	for(var v of freetimes){
+		var e = $("#tl" + v[0]);
+		var leftStr = (v[1] / timeMax * 100) + "%";
+		var widthStr = ((v[2] - v[1]) / timeMax * 100) + "%";
+		e.append(
+				$("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr})
+				.append(
+					$("<span>", {class: "badge"}).text(2)))
+	}
+}
+</script>
+<div class="container">
+<h2>求人タイムライン</h2>
+<div id="tlrow" class="row">
+	<div class="tt-header col-md-1 col-lg-1" style="height: 30px;"></div>
+	<div class="tt-header-top col-md-11 col-lg-11" style="height: 30px;"></div>
+</div>
+<div>
+<a class="btn btn-primary" href="user_edit">登録情報変更</a>
+</div>
+</div>
 <% include _footer %>
