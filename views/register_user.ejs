@@ -1,5 +1,7 @@
 <% include _header %>
-
+    <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
     <div class = "panel panel-default" style="">
         <div class = "panel-heading">
             <h4 class = "panel-title">Sign Up</h4>
@@ -13,6 +15,9 @@
                     <div class = "form-group">
                         <input class = "form-control form-pass" placeholder = "Password" name = "password" type = "password" value = "">
                     </div>
+                    <div class = "form-checkbox">
+                        <label><input name = "isCompany" type = "checkbox" value = "checked"> Company</label>
+                    </div>
                     <div class = "form-button">
                         <input class = "btn btn-lg btn-success btn-block" type = "submit" value = "Register">
                     </div>
@@ -20,5 +25,7 @@
             </form>
         </div>
     </div>
-
+    </div>
+    </div>
+    </div>
 <% include _footer %>

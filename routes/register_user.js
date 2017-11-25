@@ -14,10 +14,11 @@ router.get('/', function(req, res, next) {
 router.post('/', function (req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
+    var isCompany = (req.body.isCompany)? 1: 0;
 
     db.get('SELECT * FROM user WHERE name = ?', username, function(err, row) {
         if (!row) {
-            db.run('INSERT INTO USER(name, password, isCompany) VALUES(?, ?, 0)', username, password);
+            db.run('INSERT INTO USER(name, password, isCompany) VALUES(?, ?, ?)', username, password, isCompany);
             console.log("User " + username + " added");
 
             res.redirect("/login");
