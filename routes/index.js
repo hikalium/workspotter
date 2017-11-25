@@ -6,7 +6,11 @@ var db = new sqlite3.Database('workspotter.sqlite3');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  db.all("select * from freetime", (err, ft) => {
+  if(!req.user){
+  	res.redirect("/login");
+	return;
+  }
+  db.all("select * from freetime where userId = ?", [req.user.id], (err, ft) => {
 	  if(err){
 		res.status(500).send({ error: 'db fail' });
 		return;
