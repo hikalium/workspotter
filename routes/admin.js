@@ -11,14 +11,14 @@ var db = new sqlite3.Database('./workspotter.sqlite3');
 router.get('/', function(req, res, next) {
   res.render('admin', {});
 
-db.run("INSERT INTO user(name, password, isCompany) VALUES (?, ?, ?)", [
-		"TakatoYamazaki",
-		"takatakatenten",
-		0]);
-db.run("INSERT INTO user(name, password, isCompany) VALUES (?, ?, ?)", [
-		"MenG",
-		"menmenGG",
-		0]);
+// db.run("INSERT INTO user(name, password, isCompany) VALUES (?, ?, ?)", [
+// 		"TakatoYamazaki",
+// 		"takatakatenten",
+// 		0]);
+// db.run("INSERT INTO user(name, password, isCompany) VALUES (?, ?, ?)", [
+// 		"MenG",
+// 		"menmenGG",
+// 		0]);
 });
 
 module.exports = router;
