@@ -1,4 +1,5 @@
 <% include _header %>
+<<<<<<< HEAD
 <div class="container">
   <h2>仕事登録</h2>
   <form method="post" action="/job_edit">
@@ -35,4 +36,18 @@
     <button type="submit" class="btn btn-primary">追加</button>
   </form>
 </div>
+=======
+<form method="post" action="/job_edit">
+	<p>
+		会社名：<input type="text" name="companyName" value="" /><br>
+		概要：<input type="text" name="description" value="" /><br>
+		画像URL：<input type="text" name="imageUrl" value="" /><br>
+		primaryRateId：<input type="number" name="primaryRateId" value="" /><br>
+		ParamA：<input type="number" name="paramA" value="" /><br>
+		ParamB：<input type="number" name="paramB" value="" /><br>
+		ParamC：<input type="number" name="paramC" value="" /><br>
+		<input type="submit" value="変更" />　
+	</p>
+</form>
+>>>>>>> 72fc4de7eb7ee1667fee04dffd0af3716cfd6ece
 <% include _footer %>
