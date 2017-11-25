@@ -1,13 +1,13 @@
 <% include _header %>
-<form method="post">
+<form method="post" action="/job_edit">
 	<p>
-		会社名：<input type="text" name="" /><br>
-		概要：<input type="text" name="" /><br>
-		画像URL：<input type="text" name="" /><br>
-		primaryRateId：<input type="number" name="" /><br>
-		ParamA：<input type="number" name="" /><br>
-		ParamB：<input type="number" name="" /><br>
-		ParamC：<input type="number" name="" /><br>
+		会社名：<input type="text" name="companyName" value="" /><br>
+		概要：<input type="text" name="description" value="" /><br>
+		画像URL：<input type="text" name="imageUrl" value="" /><br>
+		primaryRateId：<input type="number" name="primaryRateId" value="" /><br>
+		ParamA：<input type="number" name="paramA" value="" /><br>
+		ParamB：<input type="number" name="paramB" value="" /><br>
+		ParamC：<input type="number" name="paramC" value="" /><br>
 		<input type="submit" value="変更" />　
 	</p>
 </form>
