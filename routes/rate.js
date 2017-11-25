@@ -31,9 +31,13 @@ router.post('/', function(req, res, next){
       jobId = rows[0].jobId;
       userId = rows[0].userId;
     });
+    var sqlstr = "";
+    sqlstr += 'SELECT * FROM category ';
+    sqlstr += 'INNER JOIN reqrate ON categoryId=category.id AND jobId=? ';
+    sqlstr += 'INNER JOIN rate ON categoryId=category.id AND userId=?';
 
     var stmt = db.prepare("INSERT INTO jobeval(applyId, categoryId, eval) VALUES (?, ?, ?)");
-    db.each('SELECT * FROM category INNER JOIN reqrate ON categoryId=category.id AND jobId=? INNER JOIN rate ON categoryId=category.id AND userId=?',jobId,userId,function (err, row) {
+    db.each(sqlstr,jobId,userId,function (err, row) {
       stmt.run(applyId, row.id, eval);
       db.run("UPDATE rate SET rate=? WHERE userId=? AND categoryId=?",getRate(row.rate, row.reqRate,eval),userId,row.id);
     });
