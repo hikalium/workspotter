@@ -1,53 +1,28 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Workspotter</title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/tamaina/The-Japanese-Web-Fonts/v6.0.0/css/JPWF-Addons.css"/> <!-- JpWF Addons -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/tamaina/The-Japanese-Web-Fonts/v6.0.0/css/GenJpFont-X.css"/> <!-- JpWF GenShin -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/tamaina/The-Japanese-Web-Fonts/v6.0.0/css/MgenP-X.css"/> <!-- JpWF Mgen+ -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <link rel='stylesheet' href='/stylesheets/rate.css'/>
-  </head>
-  <body>
-    <header>
-      <div id="logo"></div>
-    </header>
-    
-    <div class = "panel panel-default" style="">
-        <div class = "panel-heading">
-            <h4 class = "panel-title">Evaluation</h4>
-        </div>
-        <% categorys.forEach(function(category){ %>
-        <div class = "panel-body">
-            <h5><%= category %></h5>
-            <form class ="panel-form" method = "POST" action="/rate?applyId=<%= applyId %>">
-                <filedset>
-                    <div class="btn-group" data-toggle="buttons">
-                        <% for (var i = 0; i < 10; i++) {if(i===0){ %>
-                        <label class="btn btn-success active"><% }else{ %>
-                        <label class="btn btn-success"><% } %>
-                            <input type="radio" name="eval" autocomplete="off" value="<%= i %>"> <%= i %>
-                        </label><% } %>
-                    </div>
-                    <div class = "form-button">
-                        <input class = "btn btn-lg btn-success btn-block" type = "submit" value = "Submit">
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-        <% }); %>
-        <div class = "panel-footing">
-        </div>
+<% include _header %>
+<div class = "panel panel-default" style="">
+    <div class = "panel-heading">
+        <h4 class = "panel-title">Evaluation</h4>
     </div>
-
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  </body>
-</html>
+    <% categorys.forEach(function(category){ %>
+    <div class = "panel-body">
+        <h5><%= category %></h5>
+        <form class ="panel-form" method = "POST" action="/rate?applyId=<%= applyId %>">
+            <filedset>
+                <div class="btn-group" data-toggle="buttons">
+                    <% for (var i = 0; i < 10; i++) {if(i===0){ %>
+                    <label class="btn btn-success active"><% }else{ %>
+                    <label class="btn btn-success"><% } %>
+                        <input type="radio" name="eval" autocomplete="off" value="<%= i %>"> <%= i %>
+                    </label><% } %>
+                </div>
+                <div class = "form-button">
+                    <input class = "btn btn-lg btn-success btn-block" type = "submit" value = "Submit">
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <% }); %>
+    <div class = "panel-footing">
+    </div>
+</div>
+<% include _footer %>

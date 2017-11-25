@@ -10,14 +10,17 @@ var db = new sqlite3.Database('./workspotter.sqlite3');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('login', {});
+    res.render('login');
+});
+
+router.get('/register_user', function(req, res, next) {
+    res.redirect('/register_user');
 });
 
 //passport
 router.use(passport.initialize());
 var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy(function(username, password, done){
-    console.log(db);
     db.get('SELECT * FROM user WHERE name = ?', username, function(err, row) {
         if (!row) {
             console.log("login fail");
@@ -38,10 +41,11 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-router.post('/login',
+router.post('/',
     passport.authenticate('local', {
         failureRedirect: '',
         successRedirect: '/index',
     })
 );
+
 module.exports = router;
