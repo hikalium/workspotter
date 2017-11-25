@@ -15,6 +15,14 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+function isAuthenticated(req, res, next){
+	if (req.isAuthenticated()) {  // 認証済
+		return next();
+	}
+	else {  // 認証されていない
+		res.redirect('/login');  // ログイン画面に遷移
+	}
+}
 //
 passport.serializeUser(function(user, done) {
 	    done(null, user);
