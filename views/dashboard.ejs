@@ -1,5 +1,34 @@
 <% include _header %>
-<form method="post" action="">
-    <input class="btn-primary" type="submit" value="求人作成"></input>
-</form>
+<div class="container">
+  <% if (msg.content) { %>
+    <% if (msg.type == 'info') { %>
+      <div class="alert alert-success">
+        <%= msg.content %>
+      </div>
+    <% } else { %>
+      <div class="alert alert-danger">
+        <%= msg.content %>
+      </div>
+    <% } %>
+  <% } %>
+  <form method="get" action="/job_edit">
+    <div class="insert_btn">
+      <input class="btn-primary" type="submit" value="求人作成"></input>
+    </div>
+  </form>
+  <h2>求人情報</h2>
+  <% if (recruitingJobs.length > 0) { %>
+    <table class="table table-inverse info">
+      <% for (j of recruitingJobs) { %>
+        <tr>
+          <th width="5%"><%= j.id %></th>
+          <td width="40%"><%= j.name %></td>
+          <td><%= j.description %></td>
+        </tr>
+      <% } %>
+    </table>
+  <% } else { %>
+    <p>現在求人はしていません。</p>
+  <% } %>
+</div>
 <% include _footer %>
