@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+	  <h2>freetime一覧</h2>
+	  <% for (var item of freetimes) { %>
+	  <p>
+	  <%= item.from_hour %>時
+	  <%= item.from_minute %>分
+	  から
+	  <%= item.to_hour %>時
+	  <%= item.to_minute %>分
+	  </p>
+	  <% } %>
+    <h1>freetime編集</h1>
+	<form name="day" action="/user_edit" method="post">
+		<select name="day">
+			<option value="0">日</option>
+			<option value="1">月</option>
+			<option value="2">火</option>
+			<option value="3">水</option>
+			<option value="4">木</option>
+			<option value="5">金</option>
+			<option value="6">土</option>
+		</select>
+		曜日
+		<input name="from_h" type="number" min="0" max="23">
+		時
+		<input name="from_m" type="number" min="0" max="59">
+		分
+		から
+		<input name="to_h" type="number" min="0" max="23">
+		時
+		<input name="to_m" type="number" min="0" max="59">
+		分
+		<input type="submit" value="追加"> 
+  </body>
+</html>
