@@ -1,14 +1,38 @@
 <% include _header %>
-<form method="post" action="/job_edit">
-	<p>
-		会社名：<input type="text" name="companyName" value="" /><br>
-		概要：<input type="text" name="description" value="" /><br>
-		画像URL：<input type="text" name="imageUrl" value="" /><br>
-		primaryRateId：<input type="number" name="primaryRateId" value="" /><br>
-		ParamA：<input type="number" name="paramA" value="" /><br>
-		ParamB：<input type="number" name="paramB" value="" /><br>
-		ParamC：<input type="number" name="paramC" value="" /><br>
-		<input type="submit" value="変更" />　
-	</p>
-</form>
+<div class="container">
+  <h2>仕事登録</h2>
+  <form method="post" action="/job_edit">
+    <table class="table table-inverse form-tbl">
+      <tr>
+        <th>会社名<th>
+        <td><input type="text" name="companyName" value="" /></td>
+      </tr>
+      <tr>
+        <th>概要<th>
+        <td><input type="text" name="description" value="" /></td>
+      </tr>
+      <tr>
+        <th>画像URL<th>
+        <td><input type="text" name="imageUrl" value="" /></td>
+      </tr>
+      <tr>
+        <th>primaryRateId<th>
+        <td><input type="number" name="primaryRateId" value="" /></td>
+      </tr>
+      <tr>
+        <th>ParamA<th>
+        <td><input type="number" name="paramA" value="" /></td>
+      </tr>
+      <tr>
+        <th>ParamB<th>
+        <td><input type="number" name="paramB" value="" /></td>
+      </tr>
+      <tr>
+        <th>ParamC<th>
+        <td><input type="number" name="paramC" value="" /></td>
+      </tr>
+    </table>
+    <button type="submit" class="btn btn-primary">追加</button>
+  </form>
+</div>
 <% include _footer %>

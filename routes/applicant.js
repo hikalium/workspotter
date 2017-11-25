@@ -11,6 +11,7 @@ const REJECTED = 2;
 // POST
 function submitted(req, res, next) {
   var data = req.body;
+  console.log(data);
   var status = data.status;
   var applyId = data.applyId;
   var strSQL = "";
@@ -25,15 +26,13 @@ router.post('/', function(req, res, next) {
 
 // GET
 function showApplicant(req, res, next) {
-  var assign_json = {};
-
+  var assign = {};
   var applyId = req.query.applyId;
-  var user = {};
+  assign['applyId'] = applyId;
 
   var strSQL = "";
-  var userData;
-  strSQL += "SELECT * FROM apply WHERE id = ?";
-  db.all(strSQL, [applyId], (err, row) => {
+  strSQL += "SELECT * FROM apply WHERE id = " + applyId;
+  db.all(strSQL, (err, row) => {
     if (err) {
       res.status(500).send({ error: 'db fail1' });
       return;
@@ -47,7 +46,7 @@ function showApplicant(req, res, next) {
         res.status(500).send({ error: 'db fail2' });
         return;
       }
-      assign_json['user'] = row[0];
+      assign['user'] = row[0];
 
       strSQL = "SELECT * FROM rate WHERE userId = " + userId;
       db.all(strSQL, (err, row) => {
@@ -55,17 +54,15 @@ function showApplicant(req, res, next) {
           res.status(500).send({ error: 'db fail3' });
           return;
         }
-        assign_json['user']['rates'] = row;
-        console.log(row);
+        assign['user']['rates'] = row;
 
         strSQL = "SELECT * FROM job WHERE id = " + jobId;
-        console.log(strSQL);
         db.all(strSQL, (err, row) => {
           if (err) {
             res.status(500).send({ error: 'db fail4' });
             return;
           }
-          assign_json['job'] = row[0];
+          assign['job'] = row[0];
 
           strSQL = "SELECT * FROM category";
           db.all(strSQL, (err, row) => {
@@ -77,10 +74,9 @@ function showApplicant(req, res, next) {
             for (var r of row) {
               categories[r.id] = r;
             }
-            assign_json['category'] = categories;
-            console.log(assign_json);
-
-            res.render('applicant', assign_json);
+            assign['category'] = categories;
+            console.log(assign);
+            res.render('applicant', assign);
           });
         });
       });

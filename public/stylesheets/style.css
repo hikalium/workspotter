@@ -61,3 +61,25 @@ header{
 	background-color: red;
 	color: white;
 }
+
+table.info {
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+table.form-tbl {
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+table.form-tbl > tbody > tr > th {
+    width: 20%;
+}
+table.form-tbl > tbody > tr > td {
+    width: 80%;
+}
+
+.insert_btn {
+    text-align: left;
+}
