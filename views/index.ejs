@@ -6,8 +6,8 @@ var freetimes = [
 	<% for (var item of freetimes) { %>
 		[
 			<%= item.day %>,
-			<%= item.from_hour %> * 60 + <%= item.from_minute %>,
-			<%= item.to_hour %> * 60 + <%= item.to_minute %>
+			<%= item.timecode_from %>,
+			<%= item.timecode_to %>
 		],
 	<% } %>
 ];
