@@ -20,7 +20,7 @@ router.post('/', function (req, res, next) {
             db.run('INSERT INTO USER(name, password, isCompany) VALUES(?, ?, 1)', username, password);
             console.log("User " + username + " added");
 
-            res.redirect("/register_user");
+            res.redirect("/login");
         }
         else {
             console.log("User " + username + " already exist");
