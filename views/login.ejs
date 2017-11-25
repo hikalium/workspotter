@@ -28,7 +28,7 @@
             <h4 class = "panel-title">Sign In</h4>
         </div>
         <div class = "panel-body">
-            <form class ="panel-form" role = "form" method = "POST" action="/login/login">
+            <form class ="panel-form" role = "form" method = "POST" action="/login">
                 <filedset>
                     <div class = "form-group">
                         <input class ="form-control form-username" placeholder = "Username" name = "username" type = "text">
@@ -42,7 +42,14 @@
                 </fieldset>
             </form>
         </div>
-        <div class = "panel-footing">
+        <div class = "panel-body">
+            <form class ="panel-form" role = "form" method = "GET" action="/login/register_user">
+                <filedset>
+                    <div class = "form-button">
+                        <input class = "btn btn-lg btn-danger btn-block" type = "submit" value = "Sign up">
+                    </div>
+                </fieldset>
+            </form>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
