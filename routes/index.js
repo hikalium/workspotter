@@ -6,12 +6,18 @@ var db = new sqlite3.Database('workspotter.sqlite3');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  var retv = db.all("select * from freetime", (err, row) => {
+  db.all("select * from freetime", (err, ft) => {
 	  if(err){
 		res.status(500).send({ error: 'db fail' });
 		return;
 	  }
-  	res.render('index', { freetimes: row });
+	  db.all("select * from job", (err, jb) => {
+		  if(err){
+			  res.status(500).send({ error: 'db fail' });
+			  return;
+		  }
+		  res.render('index', { freetimes: ft, jobs: jb });
+	  });
   });
 });
 

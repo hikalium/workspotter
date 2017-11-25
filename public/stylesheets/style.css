@@ -56,6 +56,13 @@ header{
 	width: 10%;
 	position: absolute;
 }
+.tt-jobs{
+	height: 100%;
+	background-color: rgba(0, 0, 255, 0.3);
+	left: 0px;
+	width: 10%;
+	position: absolute;
+}
 .badge{
 	margin-left: 0.5em;
 	background-color: red;
