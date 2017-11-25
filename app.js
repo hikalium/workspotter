@@ -44,7 +44,7 @@ var rate = require('./routes/rate');
 var dashboard = require('./routes/dashboard');
 var company_edit = require('./routes/company_edit');
 var job_edit = require('./routes/job_edit');
-
+var admin = require('./routes/admin');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -60,6 +60,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // router
 app.use('/', root);
+// admin
+app.use('/admin', admin);
 // user side
 app.use('/login', login);
 app.use('/index', index);
