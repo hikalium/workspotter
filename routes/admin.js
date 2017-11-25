@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
   res.render('admin', {});
 
 db.run("INSERT INTO user(name, password, isCompany) VALUES (?, ?, ?)", [
-		"Takato Yamazaki",
+		"TakatoYamazaki",
 		"takatakatenten",
 		0]);
 db.run("INSERT INTO user(name, password, isCompany) VALUES (?, ?, ?)", [
