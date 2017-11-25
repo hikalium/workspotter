@@ -1,21 +1,53 @@
-<h1>応募者情報</h1>
-<table>
-    <tr>
-        <th>ユーザID</th>
-        <td><%= user.id %></td>
-    </tr>
-    <tr>
-        <th>名前</th>
-        <td><%= user.name %></td>
-    </tr>
-    <tr>
-        <th rowspan="3">レート</th>
-        <%= user.rates.1.category_id %>
-        <% for (var rate in user.rates) { %>
+<% include _header %>
+<body>
+    <div class="content">
+        <h1>応募者情報</h1>
+        <table>
             <tr>
-                <th><%= rate.category_id %></th>
-                <td><%= rate.rate %></td>
+                <th>ユーザID</th>
+                <td><%= user.id %></td>
             </tr>
-        <% } %>
-    </tr>
-</table>
+            <tr>
+                <th>名前</th>
+                <td><%= user.name %></td>
+            </tr>
+            <tr>
+                <th rowspan="3">レート</th>
+                <% for (var rate of user.rates) { %>
+                    <tr>
+                        <th><%= category[rate.categoryId].name %></th>
+                        <td><%= rate.rate %></td>
+                    </tr>
+                <% } %>
+            </tr>
+        </table>
+
+        <h1>仕事情報</h1>
+        <table>
+            <tr>
+                <th>仕事ID</th>
+                <td><%= job.id %></td>
+            </tr>
+            <tr>
+                <th>仕事名</th>
+                <td><%= job.name %></td>
+            </tr>
+            <tr>
+                <th>仕事概要</th>
+                <td><%= job.description %></td>
+            </tr>
+            <tr>
+                <th>給与基準カテゴリ</th>
+                <td><%= category[job.primaryRateId].name %></td>
+            </tr>
+        </table>
+
+        <form method="POST">
+            <input type="hidden" name="status" value="1">
+            <button type="button" onclick="this.form.status.val = '1'; this.form.submit();">採用する</button>
+            <button type="button" onclick="this.form.status.val = '2'; this.form.submit();">採用しない</button>
+        </form>
+    </div>
+</body>
+
+<% include _footer %>

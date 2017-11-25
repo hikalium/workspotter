@@ -1,0 +1,28 @@
+<% include _header %>
+<div class = "panel panel-default" style="">
+    <div class = "panel-heading">
+        <h4 class = "panel-title">Evaluation</h4>
+    </div>
+    <% categorys.forEach(function(category){ %>
+    <div class = "panel-body">
+        <h5><%= category %></h5>
+        <form class ="panel-form" method = "POST" action="/rate?applyId=<%= applyId %>">
+            <filedset>
+                <div class="btn-group" data-toggle="buttons">
+                    <% for (var i = 0; i < 10; i++) {if(i===0){ %>
+                    <label class="btn btn-success active"><% }else{ %>
+                    <label class="btn btn-success"><% } %>
+                        <input type="radio" name="eval" autocomplete="off" value="<%= i %>"> <%= i %>
+                    </label><% } %>
+                </div>
+                <div class = "form-button">
+                    <input class = "btn btn-lg btn-success btn-block" type = "submit" value = "Submit">
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <% }); %>
+    <div class = "panel-footing">
+    </div>
+</div>
+<% include _footer %>

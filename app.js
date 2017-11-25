@@ -4,10 +4,35 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+//
+var app = express();
+// auth
 var passport = require('passport');
-
+app.use(require('express-session')({
+	  secret: 'keyboard cat',
+	    resave: true,
+		  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+function isAuthenticated(req, res, next){
+	if (req.isAuthenticated()) {  // 認証済
+		return next();
+	}
+	else {  // 認証されていない
+		res.redirect('/login');  // ログイン画面に遷移
+	}
+}
+//
+passport.serializeUser(function(user, done) {
+	    done(null, user);
+});
+passport.deserializeUser(function(user, done) {
+	    done(null, user);
+});
 // pages
 var login = require('./routes/login');
+var root = require('./routes/root');
 var index = require('./routes/index');
 var register_user = require('./routes/register_user');
 var user_edit = require('./routes/user_edit');
@@ -19,8 +44,7 @@ var rate = require('./routes/rate');
 var dashboard = require('./routes/dashboard');
 var company_edit = require('./routes/company_edit');
 var job_edit = require('./routes/job_edit');
-
-var app = express();
+var admin = require('./routes/admin');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,9 +59,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // router
-app.use('/login', login);
+app.use('/', root);
+// admin
+app.use('/admin', admin);
 // user side
-app.use('/', index);
+app.use('/login', login);
 app.use('/index', index);
 app.use('/register_user', register_user);
 app.use('/user_edit', user_edit);

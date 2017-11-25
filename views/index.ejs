@@ -1,26 +1,51 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Workspotter</title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/tamaina/The-Japanese-Web-Fonts/v6.0.0/css/JPWF-Addons.css"/> <!-- JpWF Addons -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/tamaina/The-Japanese-Web-Fonts/v6.0.0/css/GenJpFont-X.css"/> <!-- JpWF GenShin -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/tamaina/The-Japanese-Web-Fonts/v6.0.0/css/MgenP-X.css"/> <!-- JpWF Mgen+ -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-  </head>
-  <body>
-    <header>
-      <div id="logo"></div>
-    </header>
-    
-    <p>Welcome to INDEX.</p>
+<% include _header %>
+<script>
+var days = ["日", "月", "火", "水", "木", "金", "土"];
+var timeMax = 24 * 60;
+var freetimes = [
+	<% for (var item of freetimes) { %>
+		[
+			<%= item.day %>,
+			<%= item.from_hour %> * 60 + <%= item.from_minute %>,
+			<%= item.to_hour %> * 60 + <%= item.to_minute %>
+		],
+	<% } %>
+]
+onload = function(){
+	var tlRow = $("#tlrow");
+	for(var i = 1; i < 8; i++){
+		var dayId = i % 7;
+		var dayStr = days[dayId];
+		tlRow.append(
+				$('<div/>', {class: "tt-header col-md-1 col-lg-1"}).text(dayStr)
+				);
+		tlRow.append(
+				$('<div/>', {class: "tt-timeline col-md-11 col-lg-11", id: "tl" + dayId})
+				);
+		//append('<div class="col-md-11 col-lg-11 tt-timeline">')*/
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  </body>
-</html>
+	}
+	//
+	console.log(freetimes);
+	for(var v of freetimes){
+		var e = $("#tl" + v[0]);
+		var leftStr = (v[1] / timeMax * 100) + "%";
+		var widthStr = ((v[2] - v[1]) / timeMax * 100) + "%";
+		e.append(
+				$("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr})
+				.append(
+					$("<span>", {class: "badge"}).text(2)))
+	}
+}
+</script>
+<div class="container">
+<h2>求人タイムライン</h2>
+<div id="tlrow" class="row">
+	<div class="tt-header col-md-1 col-lg-1" style="height: 30px;"></div>
+	<div class="tt-header-top col-md-11 col-lg-11" style="height: 30px;"></div>
+</div>
+<div>
+<a class="btn btn-primary" href="user_edit">登録情報変更</a>
+</div>
+</div>
+<% include _footer %>

@@ -5,15 +5,14 @@ const sqlite3 = require('sqlite3');
 var db = new sqlite3.Database('workspotter.sqlite3');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  var retv = db.get("select * from freetime", (err, row) => {
+router.get('/', function(req, res) {
+  var retv = db.all("select * from freetime", (err, row) => {
 	  if(err){
-	  	console.log("Error:" + err);
-	  } else{
-  	console.log(row);
+		res.status(500).send({ error: 'db fail' });
+		return;
 	  }
+  	res.render('index', { freetimes: row });
   });
-  res.render('index', { title: 'Express' });
 });
 
 
