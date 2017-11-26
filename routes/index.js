@@ -6,23 +6,30 @@ var db = new sqlite3.Database('workspotter.sqlite3');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  if(!req.user){
-  	res.redirect("/login");
-	return;
-  }
-  db.all("select * from freetime where userId = ?", [req.user.id], (err, ft) => {
-	  if(err){
-		res.status(500).send({ error: 'db fail' });
+	if(!req.user){
+		res.redirect("/login");
 		return;
-	  }
-	  db.all("select * from job where exists(select * from freetime where userId = ? and job.day == freetime.day and freetime.timecode_from <= job.timecode_from and job.timecode_to <= freetime.timecode_to)", [req.user.id], (err, jb) => {
-		  if(err){
-			  res.status(500).send({ error: 'db fail' });
-			  return;
-		  }
-		  res.render('index', { freetimes: ft, jobs: jb });
-	  });
-  });
+	}
+	db.all("select * from freetime where userId = ?", [req.user.id], (err, ft) => {
+		if(err){
+			res.status(500).send({ error: 'db fail' });
+			return;
+		}
+		db.all("select * from job where exists(select * from freetime where userId = ? and job.day == freetime.day and freetime.timecode_from <= job.timecode_from and job.timecode_to <= freetime.timecode_to)", [req.user.id], (err, jb) => {
+			if(err){
+				res.status(500).send({ error: 'db fail' });
+				return;
+			}
+			db.all("select category.name, rate.rate, rate.created_at from rate INNER JOIN category on rate.categoryId = category.id and rate.userId = ?", [req.user.id], (err, rates) =>{
+				if(err){
+					res.status(500).send({ error: 'db fail' });
+					return;
+				}
+				console.log(rates);
+				res.render('index', { freetimes: ft, jobs: jb, rates: rates});
+			})
+		});
+	});
 });
 
 
