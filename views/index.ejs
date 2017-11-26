@@ -19,10 +19,12 @@ var jobs = [
 			day: <%= item.day %>,
 			timecode_from: "<%= item.timecode_from %>",
 			timecode_to: "<%= item.timecode_to %>",
-			name: "<%= item.name %>",
+			name: "<%= item.work_name %>",
       description: "<%= item.description %>",
       imageUrl: "<%= item.imageUrl %>",
 			id: <%= item.id %>,
+			rate_name: "<%= item.name %>",
+			rate_req: "<%= item.reqRate %>",
 		},
 	<% } %>
 ];
@@ -39,7 +41,7 @@ var rates = [
 
 function goToByScroll(id){
       // Scroll
-    $('html, body').animate({
+    $('html,body').animate({
         scrollTop: $("#"+id).offset().top},
         'slow');
 }
@@ -60,11 +62,8 @@ drawRateChart();
 		tlRow.append(
 				$('<div/>', {class: "tt-timeline col-md-11 col-lg-11", id: "tl" + dayId})
 					.click(function(e){
-                        var targetId = e.target.id.replace("tl", "");
-                        if (!targetId) {
-                            targetId = e.target.parentElement.id.replace("tl", "");
-                        }
-						goToByScroll("jobs" + targetId);
+						e.preventDefault();
+						goToByScroll("jobs" + dayId); 
 					})
 				);
 	}
@@ -73,7 +72,8 @@ drawRateChart();
 		var e = $("#tl" + v[0]);
 		var leftStr = (v[1] / timeMax * 100) + "%";
 		var widthStr = ((v[2] - v[1]) / timeMax * 100) + "%";
-		e.append($("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr}));
+		e.append(
+				$("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr}));
 /*
 				.append(
 					$("<span>", {class: "badge"}).text(2)))
@@ -111,9 +111,9 @@ drawRateChart();
     <h6 class="card-subtitle mb-2 text-muted">${v.description}</p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item bg-light">Cras justo odio</li>
-    <li class="list-group-item bg-light">Dapibus ac facilisis in</li>
-    <li class="list-group-item bg-light">Vestibulum at eros</li>
+    <li class="list-group-item bg-light">必要レート: ${v.rate_name}</li>
+    <li class="list-group-item bg-light">${v.rate_req} 以上</li>
+    <!--li class="list-group-item bg-light">Vestibulum at eros</li-->
   </ul>
   <div class="card-block mt-2">
     <a href="${"./job_info?id=" + v.id}" class="btn btn-primary">応募する</a>
@@ -177,11 +177,6 @@ function drawRateChart(){
 }
 </script>
 <div class="container">
-<% if (msg) { %>
-  <div class="alert alert-success">
-    <%= msg %>
-  </div>
-<% } %>
 <h2>プロフィール</h2>
 <div class="mt-2"><a class="btn btn-primary" href="user_edit">登録情報変更</a></div>
 <div id="chart_div" style="width: 100%; height: 500px;"></div>
