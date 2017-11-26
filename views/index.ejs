@@ -45,7 +45,7 @@ onload = function(){
 				$('<div/>', {class: "tt-timeline col-md-11 col-lg-11", id: "tl" + dayId})
 					.click(function(e){
 						e.preventDefault();
-						goToByScroll("jobs" + dayId); 
+						goToByScroll("jobs" + dayId);
 					})
 				);
 	}
@@ -110,6 +110,11 @@ onload = function(){
 
 </script>
 <div class="container">
+<% if (msg) { %>
+  <div class="alert alert-success">
+    <%= msg %>
+  </div>
+<% } %>
 <h2>求人タイムライン</h2>
 <div id="tlrow" class="row"></div>
 <div id="jobs"></div>

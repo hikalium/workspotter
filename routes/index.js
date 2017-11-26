@@ -10,6 +10,12 @@ router.get('/', function(req, res) {
   	res.redirect("/login");
 	return;
   }
+
+  var mg = "";
+  if (req.query.status == 'apply_success') {
+    mg = "応募が完了しました";
+  }
+
   db.all("select * from freetime where userId = ?", [req.user.id], (err, ft) => {
 	  if(err){
 		res.status(500).send({ error: 'db fail' });
@@ -20,7 +26,7 @@ router.get('/', function(req, res) {
 			  res.status(500).send({ error: 'db fail' });
 			  return;
 		  }
-		  res.render('index', { freetimes: ft, jobs: jb });
+		  res.render('index', { freetimes: ft, jobs: jb, msg: mg });
 	  });
   });
 });

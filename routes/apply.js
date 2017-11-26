@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
 		[req.user.id, req.body.id],
 	function(err){
 		if(!err){
-			res.redirect("/index");
+			res.redirect("/index?status=apply_success");
 			return;
 		}
 		console.log("DB error " + err);

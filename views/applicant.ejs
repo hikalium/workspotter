@@ -13,12 +13,12 @@
         </tr>
         <tr>
             <th rowspan="3" width="20%">レート</th>
-            <% for (var rate of user.rates) { %>
+            <% Object.keys(rates).forEach(function(key) { %>
                 <tr>
-                    <th width="20%"><%= category[rate.categoryId].name %></th>
-                    <td><%= rate.rate %></td>
+                    <th width="20%"><%= category[rates[key].categoryId].name %></th>
+                    <td><%= rates[key].rate %></td>
                 </tr>
-            <% } %>
+            <% }); %>
         </tr>
     </table>
 

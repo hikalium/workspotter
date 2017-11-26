@@ -12,7 +12,7 @@
     <% } %>
   <% } %>
   <h2>応募者情報</h2>
-  <% if (apply.length > 0) { %>
+  <% if (applies.length > 0) { %>
   <div class="p-1 mt-2" style="height: 300px; overflow-y: scroll">
     <table class="table table-striped table-hover info bg-light table-bordered m-0">
       <thead>
@@ -45,7 +45,7 @@
         <input class="btn btn-primary" type="submit" value="求人作成"></input>
     </div>
   </form>
-  <% if (recruitingJobs.length > 0) { %>
+  <% if (Object.keys(recruitingJobs).length > 0) { %>
   <div class="p-1 mt-2" style="height: 300px; overflow-y: scroll">
     <table class="table table-striped table-hover info bg-light table-bordered m-0">
       <thead>
@@ -55,13 +55,13 @@
           <th>概要</th>
         </tr>
       </thead>
-      <% for(var job of recruitingJobs) { %>
+      <% Object.keys(recruitingJobs).forEach(function (key) { %>
         <tr>
-          <th width="5%"><%= job.id %></th>
-          <td width="40%"><%= job.name %></td>
-          <td><%= job.description %></td>
+          <th width="5%"><%= recruitingJobs[key].id %></th>
+          <td width="40%"><%= recruitingJobs[key].name %></td>
+          <td><%= recruitingJobs[key].description %></td>
         </tr>
-      <% }; %>
+      <% }); %>
     </table>
   </div>
   <% } else { %>

@@ -44,8 +44,7 @@ router.get('/', function(req, res, next) {
             obj[r.id] = r;
             ids.push(r.id);
         }
-		console.log(obj.length);
-        assign['recruitingJobs'] = row;
+        assign['recruitingJobs'] = obj;
 
         strSQL = "SELECT * FROM apply WHERE status = 0 AND jobId IN (" + ids.join([separator = ',']) + ")";
         db.all(strSQL, (err, row) => {
@@ -53,13 +52,13 @@ router.get('/', function(req, res, next) {
                 res.status(500).send({ error: 'db fail' });
                 return;
             }
-            assign['apply'] = row;
+            assign['applies'] = row;
             var uids = [];
             for (r of row) {
                 uids.push(r.userId);
             }
 
-            strSQL = "SELECT * FROM user WHERE userId IN (" + uids.join([separator = ',']) + ")";
+            strSQL = "SELECT * FROM user WHERE id IN (" + uids.join([separator = ',']) + ")";
             db.all(strSQL, (err, row) => {
                 if(err){
                     res.status(500).send({ error: 'db fail' });
