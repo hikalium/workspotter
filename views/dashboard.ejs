@@ -27,16 +27,41 @@
           <th>概要</th>
         </tr>
       </thead>
-      <% for (j of recruitingJobs) { %>
+      <% recruitingJobs.forEach(function (job, key) { %>
         <tr>
-          <th width="5%"><%= j.id %></th>
-          <td width="40%"><%= j.name %></td>
+          <th width="5%"><%= job.id %></th>
+          <td width="40%"><%= job.name %></td>
           <td><%= j.description %></td>
         </tr>
-      <% } %>
+      <% }); %>
     </table>
   <% } else { %>
     <p>現在求人はしていません。</p>
+  <% } %>
+  <h2>応募者情報</h2>
+  <% if (apply.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>仕事ID</th>
+          <th>仕事名</th>
+          <th>応募者名</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var apply of applies) { %>
+        <tr>
+          <td><%= apply.jobId %></td>
+          <td><%= recruitingJobs[apply.jobId].name %></td>
+          <td><%= user[apply.userId].name %></td>
+          <td><a href="/applicant?applyId=<%= apply.id %>">詳細</a></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>現在応募者はいません。</p>
   <% } %>
 </div>
 <% include _footer %>
