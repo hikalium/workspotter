@@ -37,7 +37,7 @@ var index = require('./routes/index');
 var register_user = require('./routes/register_user');
 var user_edit = require('./routes/user_edit');
 var job_info = require('./routes/job_info');
-var apply_done = require('./routes/apply_done');
+var apply = require('./routes/apply');
 var register_company = require('./routes/register_company');
 var applicant = require('./routes/applicant');
 var rate = require('./routes/rate');
@@ -68,7 +68,7 @@ app.use('/index', index);
 app.use('/register_user', register_user);
 app.use('/user_edit', user_edit);
 app.use('/job_info', job_info);
-app.use('/apply_done', apply_done);
+app.use('/apply', apply);
 // company side
 app.use('/register_company', register_company);
 app.use('/applicant', applicant);
