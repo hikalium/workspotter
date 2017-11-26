@@ -46,13 +46,21 @@ router.get('/', function(req, res, next) {
         }
         assign['recruitingJobs'] = obj;
 
-        strSQL = "SELECT * FROM apply WHERE status = 0 AND jobId IN (" + ids.join([separator = ',']) + ")";
+        strSQL = "SELECT * FROM apply WHERE status IN (0, 1) AND jobId IN (" + ids.join([separator = ',']) + ")";
         db.all(strSQL, (err, row) => {
             if(err){
                 res.status(500).send({ error: 'db fail' });
                 return;
             }
-            assign['applies'] = row;
+            assign['applies'] = [];
+            assign['accepted'] = [];
+            for (r of row) {
+                if (r.status == 0) {
+                    assign['applies'].push(r);
+                } else if (r.status == 1) {
+                    assign['accepted'].push(r);
+                }
+            }
             var uids = [];
             for (r of row) {
                 uids.push(r.userId);
