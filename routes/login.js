@@ -46,10 +46,13 @@ passport.deserializeUser(function(user, done) {
 });
 
 router.post('/',
-    passport.authenticate('local', {
-        failureRedirect: '/login?fail=1',
-        successRedirect: '/index',
-    })
+    passport.authenticate('local', {failureRedirect: '/login?fail=1'}), function (req, res) {
+        if (req.user.isCompany == 1) {
+            res.redirect('dashboard');
+        } else {
+            res.redirect('index');
+        }
+    }
 );
 
 module.exports = router;

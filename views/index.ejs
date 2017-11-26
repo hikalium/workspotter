@@ -19,7 +19,8 @@ var jobs = [
 			timecode_from: "<%= item.timecode_from %>",
 			timecode_to: "<%= item.timecode_to %>",
 			name: "<%= item.name %>",
-			description: "<%= item.description %>",
+      description: "<%= item.description %>",
+      imageUrl: "<%= item.imageUrl %>",
 			id: <%= item.id %>,
 		},
 	<% } %>
@@ -73,30 +74,30 @@ onload = function(){
 	for(var i = 1; i < 8; i++){
 		var dayId = i % 7;
 		var dayStr = days[dayId];
-		var jobsDiv = $('<div>');
+		var jobsDiv = $('<div>', {class: "mt-3"});
 		jobsDiv.append($('<h2>', {id: "jobs" + dayId}).text(dayStr + "曜日"));
-		var jobsDivRow = $('<div>', {class: "d-flex flex-wrap"});
+		var jobsDivRow = $('<div>', {class: "d-flex flex-wrap justify-content-center"});
 		jobRow.append($('<div/>').append(jobsDiv));
 		var timecode2str = function(tc){
 			return Math.floor(tc / 60) + "時" + tc % 60 + "分";
 		}
 		var durStr = timecode2str(v.timecode_from) + "から" + timecode2str(v.timecode_to);
 		for(var v of jobs){
-			if(v.day != dayId) continue;
+      if(v.day != dayId) continue;
 			jobsDivRow.append(`
-<div class"p-2">
-<div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="..." alt="Card image cap">
+<div class="p-1 d-flex">
+<div class="card p-2 rounded bg-light" style="width: 20rem;">
+  <img class="card-img-top mb-2" src="${v.imageUrl}" alt="Card image cap">
   <div class="card-block">
     <h4 class="card-title">${v.name}</h4>
-    <p class="card-text">${v.description}</p>
+    <h6 class="card-subtitle mb-2 text-muted">${v.description}</p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Vestibulum at eros</li>
+    <li class="list-group-item bg-light">Cras justo odio</li>
+    <li class="list-group-item bg-light">Dapibus ac facilisis in</li>
+    <li class="list-group-item bg-light">Vestibulum at eros</li>
   </ul>
-  <div class="card-block">
+  <div class="card-block p-3">
     <a href="${"./jobinfo?id=" + v.id}" class="btn btn-primary">応募する</a>
   </div>
 </div>
