@@ -31,8 +31,8 @@ function showApplicant(req, res, next) {
   assign['applyId'] = applyId;
 
   var strSQL = "";
-  strSQL += "SELECT * FROM apply WHERE id = " + applyId;
-  db.all(strSQL, (err, row) => {
+  strSQL += "SELECT * FROM apply WHERE id = ?";
+  db.all(strSQL, [applyId], (err, row) => {
     if (err) {
       res.status(500).send({ error: 'db fail1' });
       return;
@@ -40,24 +40,24 @@ function showApplicant(req, res, next) {
     var userId = row[0].userId;
     var jobId = row[0].jobId;
 
-    strSQL = "SELECT * FROM user WHERE id = " + userId;
-    db.all(strSQL, (err, row) => {
+    strSQL = "SELECT * FROM user WHERE id = ?";
+    db.all(strSQL, [userId], (err, row) => {
       if (err) {
         res.status(500).send({ error: 'db fail2' });
         return;
       }
       assign['user'] = row[0];
 
-      strSQL = "SELECT * FROM rate WHERE userId = " + userId;
-      db.all(strSQL, (err, row) => {
+      strSQL = "SELECT * FROM rate WHERE userId = ?";
+      db.all(strSQL, [userId], (err, row) => {
         if (err) {
           res.status(500).send({ error: 'db fail3' });
           return;
         }
-        assign['user']['rates'] = row;
+        assign['rates'] = row;
 
-        strSQL = "SELECT * FROM job WHERE id = " + jobId;
-        db.all(strSQL, (err, row) => {
+        strSQL = "SELECT * FROM job WHERE id = ?";
+        db.all(strSQL, [jobId], (err, row) => {
           if (err) {
             res.status(500).send({ error: 'db fail4' });
             return;

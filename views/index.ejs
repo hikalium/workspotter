@@ -39,7 +39,7 @@ var rates = [
 
 function goToByScroll(id){
       // Scroll
-    $('html,body').animate({
+    $('html, body').animate({
         scrollTop: $("#"+id).offset().top},
         'slow');
 }
@@ -60,8 +60,11 @@ drawRateChart();
 		tlRow.append(
 				$('<div/>', {class: "tt-timeline col-md-11 col-lg-11", id: "tl" + dayId})
 					.click(function(e){
-						e.preventDefault();
-						goToByScroll("jobs" + dayId); 
+                        var targetId = e.target.id.replace("tl", "");
+                        if (!targetId) {
+                            targetId = e.target.parentElement.id.replace("tl", "");
+                        }
+						goToByScroll("jobs" + targetId);
 					})
 				);
 	}
@@ -70,8 +73,7 @@ drawRateChart();
 		var e = $("#tl" + v[0]);
 		var leftStr = (v[1] / timeMax * 100) + "%";
 		var widthStr = ((v[2] - v[1]) / timeMax * 100) + "%";
-		e.append(
-				$("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr}));
+		e.append($("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr}));
 /*
 				.append(
 					$("<span>", {class: "badge"}).text(2)))
@@ -175,6 +177,11 @@ function drawRateChart(){
 }
 </script>
 <div class="container">
+<% if (msg) { %>
+  <div class="alert alert-success">
+    <%= msg %>
+  </div>
+<% } %>
 <h2>プロフィール</h2>
 <div class="mt-2"><a class="btn btn-primary" href="user_edit">登録情報変更</a></div>
 <div id="chart_div" style="width: 100%; height: 500px;"></div>
