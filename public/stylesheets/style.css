@@ -8,6 +8,8 @@ body{
   font-weight: 400;
   text-align: center;
   background-image: url(https://www.fastpic.jp/images.php?file=4922122921.jpg);
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .navbar{
