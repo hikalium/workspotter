@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
     for(var i=0; i<rows.length; i++){
       categorys.push(rows[i].name);
     }
-    res.render('rate',{'applyId': applyId, 'categorys': categorys});
+    res.render('rate',{'applyId': applyId, 'categorys': categorys, 'title': '仕事の評価'});
   });
 });
 
