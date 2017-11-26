@@ -1,2 +1,43 @@
 <% include _header %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2><%= job.name %></h2>
+    </div>
+    <div class="col-sm-4">
+      <img src="<%= job.imageUrl %>" width="100%">
+    </div>
+  </div>
+  <div class="card job-info">
+    <h3 class="card-header">仕事概要</h3>
+    <div class="card-body">
+      <p class="card-text"><%= job.description %></p>
+    </div>
+  </div>
+  <div class="card job-info">
+    <h3 class="card-header">必要レート</h3>
+    <div class="card-body">
+      <p class="card-text"><%= job.reqrate %></p>
+    </div>
+  </div>
+  <div class="card job-info">
+    <h3 class="card-header">時給</h3>
+    <div class="card-body">
+      <p class="card-text"><%= job.pay %></p>
+    </div>
+  </div>
+  <div class="row apply_btn">
+    <div class="col-sm-4">
+      <button onclick="location.href='/index'" class="btn btn-secondary btn-lg btn-block" class="form-control" type="submit">一覧に戻る</button>
+    </div>
+    <div class="col-sm-8">
+      <form method="POST" action="/apply">
+        <input type="hidden" name="id" value="<%= job.id %>">
+        <div class="form-group">
+          <button class="btn btn-primary btn-lg btn-block" class="form-control" >応募する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <% include _footer %>

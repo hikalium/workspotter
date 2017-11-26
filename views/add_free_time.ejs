@@ -2,11 +2,12 @@
 <h2>freetime一覧</h2>
 <% for (var item of freetimes) { %>
 <p>
-<%= item.from_hour %>時
-<%= item.from_minute %>分
+<%= ["日", "月", "火", "水", "木", "金", "土"][item.day] %>曜日
+<%= Math.floor(item.timecode_from / 60) %>時
+<%= item.timecode_from % 60 %>分
 から
-<%= item.to_hour %>時
-<%= item.to_minute %>分
+<%= Math.floor(item.timecode_to / 60) %>時
+<%= item.timecode_to % 60 %>分
 </p>
 <% } %>
 <h1>freetime編集</h1>
