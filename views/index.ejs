@@ -62,8 +62,11 @@ drawRateChart();
 		tlRow.append(
 				$('<div/>', {class: "tt-timeline col-md-11 col-lg-11", id: "tl" + dayId})
 					.click(function(e){
-						e.preventDefault();
-						goToByScroll("jobs" + dayId); 
+						var targetId = e.target.id.replace("tl", "");
+                        if (!targetId) {
+                            targetId = e.target.parentElement.id.replace("tl", "");
+                        }
+						goToByScroll("jobs" + targetId);
 					})
 				);
 	}
