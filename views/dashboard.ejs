@@ -11,33 +11,6 @@
       </div>
     <% } %>
   <% } %>
-  <form method="get" action="/job_edit">
-    <div class="insert_btn">
-        <input type="hidden" name="userId" value=<%= userId %>></input>
-        <input class="btn-primary" type="submit" value="求人作成"></input>
-    </div>
-  </form>
-  <h2>求人情報</h2>
-  <% if (recruitingJobs.length > 0) { %>
-    <table class="table table-striped table-hover info">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>会社名</th>
-          <th>概要</th>
-        </tr>
-      </thead>
-      <% recruitingJobs.forEach(function (job, key) { %>
-        <tr>
-          <th width="5%"><%= job.id %></th>
-          <td width="40%"><%= job.name %></td>
-          <td><%= j.description %></td>
-        </tr>
-      <% }); %>
-    </table>
-  <% } else { %>
-    <p>現在求人はしていません。</p>
-  <% } %>
   <h2>応募者情報</h2>
   <% if (apply.length > 0) { %>
     <table>
@@ -62,6 +35,33 @@
     </table>
   <% } else { %>
     <p>現在応募者はいません。</p>
+  <% } %>
+  <h2>求人情報</h2>
+  <form method="get" action="/job_edit">
+    <div class="insert_btn">
+        <input type="hidden" name="userId" value=<%= userId %>></input>
+        <input class="btn-primary" type="submit" value="求人作成"></input>
+    </div>
+  </form>
+  <% if (recruitingJobs.length > 0) { %>
+    <table class="table table-striped table-hover info">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>会社名</th>
+          <th>概要</th>
+        </tr>
+      </thead>
+      <% for(var job of recruitingJobs) { %>
+        <tr>
+          <th width="5%"><%= job.id %></th>
+          <td width="40%"><%= job.name %></td>
+          <td><%= job.description %></td>
+        </tr>
+      <% }; %>
+    </table>
+  <% } else { %>
+    <p>現在求人はしていません。</p>
   <% } %>
 </div>
 <% include _footer %>
