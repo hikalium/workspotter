@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
     db.all("SELECT * FROM category", function (err, rows) {
         var categoryId = {};
         var categoryName = [];
-        for(var i=0; i<rows.length; i++){
+        for(var i=0; i < rows.length; i++){
             categoryName.push(rows[i].name);
 
             categoryId[rows[i].name] = rows[i].id;
@@ -31,14 +31,29 @@ router.post('/', function(req, res, next){
     var eval = req.body;
 
 
-    console.log(eval);
-
     db.get('SELECT * FROM apply WHERE id=?', applyId, function(err, row){
         var userId = row.userId;
+        var jobId = row.jobId;
 
-        Object.keys(eval).forEach(function (key) {
-            db.get('SELECT * FROM rate WHERE userId = ? AND categoryId = ?', [userId, key], function (err, row) {
-                
+        db.get('SELECT * FROM rate WHERE userId = ?', userId, function (err, rateRows) {
+            db.get('SELECT * FROM job WHERE id = ?', jobId, function (err, jobRow) {
+                var newrate;
+                var k = 0.2
+
+                rateRows.forEach(function (e) {
+                    if (eval[e.categoryId]) {
+
+                        newrate = 0.1 * (jobRow.payParamC + (10 - eval[e.categoryId]) * e.rate) * k + (1.0 - k) * e.rate
+
+                        db.run('INSERT INTO RATE(userId, categoryId, rate, created_at) VALUES(?, ?, ?, ?)', [
+                            userId,
+                            e.categoryId,
+                            newrate,
+                            datetime('now', 'localtime')
+                        ]);
+                        
+                    }
+                });
             });
         });
     });
