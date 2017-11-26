@@ -31,10 +31,10 @@ passport.deserializeUser(function(user, done) {
 	    done(null, user);
 });
 // pages
+var login = require('./routes/login');
 var root = require('./routes/root');
 var index = require('./routes/index');
 var register_user = require('./routes/register_user');
-var login = require('./routes/login');
 var user_edit = require('./routes/user_edit');
 var job_info = require('./routes/job_info');
 var apply_done = require('./routes/apply_done');
