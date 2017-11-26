@@ -23,14 +23,20 @@ function showJob(req, res, next) {
             var b = job.payParamB;
             var c = job.payParamC;
             var r = data.reqRate;
+            console.log(a);
+            console.log(b);
+            console.log(c);
+            console.log(r);
             strSQL = "SELECT * FROM rate WHERE userId = " + req.user.id;
             db.all(strSQL, (err, rows2) => {
                 var x = rows2[0].rate;
+                console.log(x);
                 var pay = 0;
                 assign['reqrates'] = rows;
-                if (x > b) pay = c;
+                if (b == r) pay = c;
+                else if (x >= b) pay = c;
                 else pay = a+(c-a)/(b-r)*(x-r);
-                assign['pay'] = pay;
+                assign['pay'] = pay+"円";
                 console.log(assign);
                 res.render('job_info', assign);
             });
