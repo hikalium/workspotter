@@ -35,7 +35,7 @@ function showJob(req, res, next) {
                 assign['reqrates'] = rows;
                 if (b == r) pay = c;
                 else if (x >= b) pay = c;
-                else pay = a+(c-a)/(b-r)*(x-r);
+                else pay = Math.floor(a+(c-a)/(b-r)*(x-r));
                 assign['pay'] = pay+"円";
                 console.log(assign);
                 res.render('job_info', assign);
