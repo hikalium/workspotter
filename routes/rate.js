@@ -45,8 +45,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next){
     var applyId = req.body.applyId;
+	console.log(req.body);
     delete req.body["applyId"];
-    var eval = req.body;
 
     db.run("UPDATE apply set status = 3 WHERE id = ?", applyId);
 
@@ -59,16 +59,20 @@ router.post('/', function(req, res, next){
                 var k = 0.2
 
                 console.log(rateRows);
+                console.log("AAAAA");
 
-                var categoryId = rateRows.categoryId;
-                var rate = rateRows.rate;
-
-                console.log(eval[categoryId]);
-                if (eval[categoryId]) {
-                    var newrate = 0.1 * (jobRow.payParamC + (10 - parseInt(eval[categoryId])) * rate) * k + (1.0 - k) * rate
+                //var categoryId = rateRows.categoryId;
+                var categoryId = 4;
+                //var rate = rateRows.rate;
+                var rate = 130;
+				var ep = req.body[categoryId];
+				console.log(categoryId);
+                console.log(ep);
+                if (ep) {
+                    var newrate = 0.1 * (jobRow.payParamC + (10 - parseInt(ep)) * rate) * k + (1.0 - k) * rate
                     console.log(newrate);
 
-                    db.run('INSERT INTO RATE(userId, categoryId, rate, created_at) VALUES(?, ?, ?, datetime(\'now\', \'localtime\'))', [
+                    db.run('INSERT INTO rate(userId, categoryId, rate, created_at) VALUES(?, ?, ?, datetime(\'now\', \'localtime\'))', [
                         userId,
                         categoryId,
                         newrate

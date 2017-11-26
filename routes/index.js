@@ -29,7 +29,6 @@ router.get('/', function(req, res) {
 							and job.day == freetime.day and 
 								freetime.timecode_from <= job.timecode_from 
 								and job.timecode_to <= freetime.timecode_to)`, [req.user.id], (err, jb) => {
-			console.log(jb);
 			if(err){
 				res.status(500).send({ error: 'db fail' });
 				return;
@@ -39,7 +38,6 @@ router.get('/', function(req, res) {
 					res.status(500).send({ error: 'db fail' });
 					return;
 				}
-				console.log(rates);
 				res.render('index', { freetimes: ft, jobs: jb, rates: rates, msg: mg});
 			})
 		});
