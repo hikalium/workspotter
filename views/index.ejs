@@ -97,7 +97,7 @@ onload = function(){
     <li class="list-group-item bg-light">Dapibus ac facilisis in</li>
     <li class="list-group-item bg-light">Vestibulum at eros</li>
   </ul>
-  <div class="card-block">
+  <div class="card-block mt-2">
     <a href="${"./job_info?id=" + v.id}" class="btn btn-primary">応募する</a>
   </div>
 </div>
@@ -112,9 +112,7 @@ onload = function(){
 <div class="container">
 <h2>求人タイムライン</h2>
 <div id="tlrow" class="row"></div>
+<div class="mt-2"><a class="btn btn-primary" href="user_edit">登録情報変更</a></div>
 <div id="jobs"></div>
-<div>
-	<a class="btn btn-primary" href="user_edit">登録情報変更</a>
-</div>
 </div>
 <% include _footer %>
