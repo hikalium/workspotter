@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
 
     switch (status) {
         case 'apply_complete':
-            content = "応募者が採用情報が更新されました。";
+            content = "採用情報が更新されました。";
             type = "info";
             break;
         case 'rate_complete':
