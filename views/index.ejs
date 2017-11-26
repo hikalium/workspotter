@@ -25,6 +25,13 @@ var jobs = [
 	<% } %>
 ]
 
+function goToByScroll(id){
+      // Scroll
+    $('html,body').animate({
+        scrollTop: $("#"+id).offset().top},
+        'slow');
+}
+
 onload = function(){
 	var tlRow = $("#tlrow");
 	for(var i = 1; i < 8; i++){
@@ -35,6 +42,10 @@ onload = function(){
 				);
 		tlRow.append(
 				$('<div/>', {class: "tt-timeline col-md-11 col-lg-11", id: "tl" + dayId})
+					.click(function(e){
+						e.preventDefault();
+						goToByScroll("jobs" + dayId); 
+					})
 				);
 	}
 	//
