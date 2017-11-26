@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
 			return;
 		}
 		db.all(`
-			select job.name as work_name, * from job
+			select job.name as work_name, job.id as job_id, * from job
 				inner join reqrate on job.id = reqrate.jobId 
 				inner join category on reqrate.categoryId = category.id 
 					where exists(
