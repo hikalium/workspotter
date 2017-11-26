@@ -20,15 +20,19 @@
         <td><input type="number" name="primaryRateId" value="" /></td>
       </tr>
       <tr>
-        <th>ParamA<th>
+        <th>必要レート<th>
+        <td><input type="number" name="RequiredId" value="" /></td>
+      </tr>
+      <tr>
+        <th>パラメータA<th>
         <td><input type="number" name="paramA" value="" /></td>
       </tr>
       <tr>
-        <th>ParamB<th>
+        <th>パラメータB<th>
         <td><input type="number" name="paramB" value="" /></td>
       </tr>
       <tr>
-        <th>ParamC<th>
+        <th>パラメータC<th>
         <td><input type="number" name="paramC" value="" /></td>
       </tr>
       <tr>
@@ -47,11 +51,15 @@
       </tr>
       <tr>
         <th>開始時間<th>
-        <td><input type="time" name="startTime" step="1" value="" /></td>
+        <td><input type="time" name="startTime" step="60" value="" /></td>
       </tr>
       <tr>
         <th>終了時間<th>
-        <td><input type="time" name="endTime" step="1" value="" /></td>
+        <td><input type="time" name="endTime" step="60" value="" /></td>
+      </tr>
+      <tr>
+        <th>公開中<th>
+        <td><input name = "isRecruitingFlg" type = "checkbox" value = "checked"></td>
       </tr>
     </table>
     <button type="submit" class="btn btn-primary">追加</button>
