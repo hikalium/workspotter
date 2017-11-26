@@ -1,2 +1,53 @@
 <% include _header %>
+
+<div class="container">
+    <h1>応募者情報</h1>
+    <table class="table table_bordered info" width="100%">
+        <tr>
+            <th width="20%">ユーザID</th>
+            <td colspan="2"><%= user.id %></td>
+        </tr>
+        <tr>
+            <th width="20%">名前</th>
+            <td colspan="2"><%= user.name %></td>
+        </tr>
+        <tr>
+            <th rowspan="3" width="20%">レート</th>
+            <% for (var rate of user.rates) { %>
+                <tr>
+                    <th width="20%"><%= category[rate.categoryId].name %></th>
+                    <td><%= rate.rate %></td>
+                </tr>
+            <% } %>
+        </tr>
+    </table>
+
+    <h1>仕事情報</h1>
+    <table class="table table_bordered info" width="100%">
+        <tr>
+            <th width="20%">仕事ID</th>
+            <td><%= job.id %></td>
+        </tr>
+        <tr>
+            <th width="20%">仕事名</th>
+            <td><%= job.name %></td>
+        </tr>
+        <tr>
+            <th width="20%">仕事概要</th>
+            <td><%= job.description %></td>
+        </tr>
+        <tr>
+            <th width="20%">給与基準カテゴリ</th>
+            <td><%= category[job.primaryRateId].name %></td>
+        </tr>
+    </table>
+
+    <form method="POST">
+        <input type="hidden" name="status" value="1">
+        <input type="hidden" name="applyId" value="<%= applyId %>">
+        <button type="button" onclick="this.form.status.val = '1'; this.form.submit();">採用する</button>
+        <button type="button" onclick="this.form.status.val = '2'; this.form.submit();">採用しない</button>
+    </form>
+</div>
+
 <% include _footer %>
