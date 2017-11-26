@@ -7,7 +7,7 @@ var db = new sqlite3.Database('workspotter.sqlite3');
 /* GET home page. */
 
 function showFreeTimeList(req, res, next) {
-  var retv = db.all("select * from freetime", (err, row) => {
+  var retv = db.all("select * from freetime where userId = ?",[req.user.id], (err, row) => {
 	  if(err){
 		res.status(500).send({ error: 'db fail' });
 		return;
@@ -17,10 +17,18 @@ function showFreeTimeList(req, res, next) {
 };
 
 router.get('/', function(req, res, next) {
-showFreeTimeList(req, res, next);
+	if(!req.user || !req.user.id){
+		res.redirect("/login");
+		return;
+	}
+	showFreeTimeList(req, res, next);
 });
 
 router.post('/', function(req, res, next) {
+	if(!req.user || !req.user.id){
+		res.redirect("/login");
+		return;
+	}
 	console.log(req.body);
 	db.run("INSERT INTO freetime(userId, day, timecode_from, timecode_to) VALUES (?, ?, ?, ?)", [
 		req.user.id,
