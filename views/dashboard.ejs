@@ -13,7 +13,8 @@
   <% } %>
   <h2>応募者情報</h2>
   <% if (apply.length > 0) { %>
-    <table>
+  <div class="p-1 mt-2" style="height: 300px; overflow-y: scroll">
+    <table class="table table-striped table-hover info bg-light table-bordered m-0">
       <thead>
         <tr>
           <th>仕事ID</th>
@@ -33,6 +34,7 @@
         <% } %>
       </tbody>
     </table>
+  </div>
   <% } else { %>
     <p>現在応募者はいません。</p>
   <% } %>
@@ -40,11 +42,12 @@
   <form method="get" action="/job_edit">
     <div class="insert_btn">
         <input type="hidden" name="userId" value=<%= userId %>></input>
-        <input class="btn-primary" type="submit" value="求人作成"></input>
+        <input class="btn btn-primary" type="submit" value="求人作成"></input>
     </div>
   </form>
   <% if (recruitingJobs.length > 0) { %>
-    <table class="table table-striped table-hover info">
+  <div class="p-1 mt-2" style="height: 300px; overflow-y: scroll">
+    <table class="table table-striped table-hover info bg-light table-bordered m-0">
       <thead>
         <tr>
           <th>ID</th>
@@ -60,8 +63,9 @@
         </tr>
       <% }; %>
     </table>
+  </div>
   <% } else { %>
-    <p>現在求人はしていません。</p>
+  <p>現在求人はしていません。</p>
   <% } %>
 </div>
 <% include _footer %>
