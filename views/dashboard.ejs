@@ -13,12 +13,20 @@
   <% } %>
   <form method="get" action="/job_edit">
     <div class="insert_btn">
-      <input class="btn-primary" type="submit" value="求人作成"></input>
+        <input type="hidden" name="userId" value=<%= userId %>></input>
+        <input class="btn-primary" type="submit" value="求人作成"></input>
     </div>
   </form>
   <h2>求人情報</h2>
   <% if (recruitingJobs.length > 0) { %>
-    <table class="table table-inverse info">
+    <table class="table table-striped table-hover info">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>会社名</th>
+          <th>概要</th>
+        </tr>
+      </thead>
       <% for (j of recruitingJobs) { %>
         <tr>
           <th width="5%"><%= j.id %></th>

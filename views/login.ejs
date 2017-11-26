@@ -1,19 +1,20 @@
 <!DOCTYPE html>
+<% include _header %>
 <html lang="ja">
-  <head>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<head>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> -->
     <style>
-      body {
+    body {
         margin: 0px;
-      }
+    }
 
-      .page {
-        height: 100vh;
-        overflow: scroll;
-      }
+    .page {
+        margin: -15px 0 0 0;
+        height: 95vh;
+        overflow: hidden;
+    }
 
-      .box {
+    .box {
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -36,73 +37,73 @@
         background-size: cover;
         background-position: center;
         background-image: url(https://www.fastpic.jp/images.php?file=4922122921.jpg);
-      }
+    }
 
-      h2 {
+    h2 {
         font-size: 50px;
-        font-weight: 800;
+        font-weight: 400;
         color: white;
-        line-height: 2;
-      }
+        line-height: 2.5;
+    }
 
-      h3 {
+    h3 {
         font-size: 20px;
         font-weight: 200;
         color: white;
         line-height: 2;
-      }
+    }
 
-      h4 {
+    h4 {
         color: white;
-      }
+    }
 
-      .panel-heading {
+    .panel-heading {
         margin-bottom: 20px;
-      }
-      </style>
-  </head>
-  <body>
+    }
+    </style>
+</head>
+<body>
     <div class="page">
-      <div class="box">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-8">
-              <h2>時給は実力で勝ち取れ。</h2>
-              <h3>あなたのバイト生活をゲームのように。<br>暇な時間にバイトを入れて、レーティングシステムであなたに見合った時給を提案します。</h3>
+        <div class="box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h2>時給は実力で勝ち取れ。</h2>
+                        <h3>あなたのバイト生活をゲームのように。<br>暇な時間にバイトを入れて、レーティングシステムであなたに見合った時給を提案します。</h3>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Workspotterにログイン</h4>
+                        </div>
+                        <div class="panel-body">
+                            <form class="panel-form" role="form" method="POST" action="/login">
+                                <filedset>
+                                    <div class="form-group">
+                                        <input class ="form-control form-username" placeholder="Username" name="username" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control form-pass" placeholder="Password" name="password" type="password" value="">
+                                    </div>
+                                    <div class="form-button">
+                                        <input class="btn btn-info btn-block" type="submit" value="ログイン">
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="panel-body" style="margin-top: 16px;">
+                            <form class ="panel-form" role="form" method="GET" action="/login/register_user">
+                                <filedset>
+                                    <div class="form-button">
+                                        <input class="btn btn-primary btn-block" type="submit" value="初めての方はこちら">
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-4">
-              <div class="panel-heading">
-                  <h4 class="panel-title">Workspotterにログイン</h4>
-              </div>
-              <div class="panel-body">
-                <form class="panel-form" role="form" method="POST" action="/login">
-                  <filedset>
-                    <div class="form-group">
-                      <input class ="form-control form-username" placeholder="Username" name="username" type="text">
-                    </div>
-                    <div class="form-group">
-                      <input class="form-control form-pass" placeholder="Password" name="password" type="password" value="">
-                    </div>
-                    <div class="form-button">
-                      <input class="btn btn-info btn-block" type="submit" value="ログイン">
-                    </div>
-                  </fieldset>
-                </form>
-              </div>
-              <div class="panel-body" style="margin-top: 16px;">
-                  <form class ="panel-form" role="form" method="GET" action="/login/register_user">
-                      <filedset>
-                          <div class="form-button">
-                              <input class="btn btn-primary btn-block" type="submit" value="初めての方はこちら">
-                          </div>
-                      </fieldset>
-                  </form>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </body>
+</body>
 <% include _footer %>
 

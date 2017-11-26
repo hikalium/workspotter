@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
     var type = "";
     var assign = {};
     var userId = req.user.id;
-    console.log(req);
+//    console.log(req);
 
     switch (status) {
         case 'apply_complete':
@@ -26,6 +26,7 @@ router.get('/', function(req, res, next) {
     assign['msg'] = {};
     assign['msg']['content'] = content;
     assign['msg']['type'] = type;
+    assign['userId'] = userId;
 
     var strSQL = "SELECT * FROM job WHERE userId = " + userId + " AND isRecruitingFlg = '1'";
     db.all(strSQL, (err, row) => {
@@ -35,6 +36,8 @@ router.get('/', function(req, res, next) {
         }
         console.log(row);
         assign['recruitingJobs'] = row;
+
+        console.log(assign);
 
         res.render('dashboard', assign);
     });
