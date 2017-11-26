@@ -2,8 +2,12 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Workspotter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% if (typeof title === "undefined"){ %>
+    <title>Workspotter</title>
+    <% } else { %>
+    <title><%= title %> - Workspotter</title>
+    <% } %>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/stylesheets/style.css"/>
 	</head>
