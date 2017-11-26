@@ -51,7 +51,7 @@ router.post('/', function(req, res, next){
                             newrate,
                             datetime('now', 'localtime')
                         ]);
-                        
+
                     }
                 });
             });

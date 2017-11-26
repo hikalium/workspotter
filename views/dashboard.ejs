@@ -13,7 +13,7 @@
   <% } %>
   <h2>応募者情報</h2>
   <% if (applies.length > 0) { %>
-  <div class="p-1 mt-2" style="height: 300px; overflow-y: scroll">
+  <div class="p-1 mt-2" style="max-height: 300px; overflow-y: auto">
     <table class="table table-striped table-hover info bg-light table-bordered m-0">
       <thead>
         <tr>
@@ -38,7 +38,34 @@
   <% } else { %>
     <p>現在応募者はいません。</p>
   <% } %>
-  <h2>求人情報</h2>
+  <h2 class="mt-3">採用済み一覧</h2>
+  <% if (accepted.length > 0) { %>
+  <div class="p-1 mt-2" style="max-height: 300px; overflow-y: auto">
+    <table class="table table-striped table-hover info bg-light table-bordered m-0">
+      <thead>
+        <tr>
+          <th>仕事ID</th>
+          <th>仕事名</th>
+          <th>応募者名</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var acc of accepted) { %>
+        <tr>
+          <td><%= acc.jobId %></td>
+          <td><%= recruitingJobs[acc.jobId].name %></td>
+          <td><%= user[acc.userId].name %></td>
+          <td><a href="/rate?applyId=<%= acc.id %>">評価</a></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <% } else { %>
+    <p>現在採用者はいません。</p>
+  <% } %>
+  <h2 class="mt-3">求人情報</h2>
   <form method="get" action="/job_edit">
     <div class="insert_btn">
         <input type="hidden" name="userId" value=<%= userId %>></input>
