@@ -83,3 +83,12 @@ table.form-tbl > tbody > tr > td {
 .insert_btn {
     text-align: left;
 }
+
+.job-info {
+    text-align: left;
+    margin-top: 30px;
+}
+
+.apply_btn {
+    margin-top: 20px;
+}
