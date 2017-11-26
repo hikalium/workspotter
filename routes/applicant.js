@@ -7,6 +7,7 @@ var db = new sqlite3.Database('workspotter.sqlite3');
 const NOT_EVALUATED = 0;
 const ACCEPTED = 1;
 const REJECTED = 2;
+const FINISHED = 3;
 
 // POST
 function submitted(req, res, next) {
