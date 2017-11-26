@@ -36,8 +36,27 @@
 
         background-size: cover;
         background-position: center;
-        background-image: url(https://www.fastpic.jp/images.php?file=4922122921.jpg);
-    }
+        background-image: url(images/login_bg.jpg);
+      }
+
+      .msg_box {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+
+        padding: 30px;
+        box-sizing: border-box;
+        width: 100vw;
+        position: absolute;
+      }
 
     h2 {
         font-size: 50px;
@@ -57,19 +76,43 @@
         color: white;
     }
 
-    .panel-heading {
+      .alert {
+        width: 100%;
+      }
+
+      .panel-heading {
         margin-bottom: 20px;
     }
     </style>
 </head>
 <body>
     <div class="page">
-        <div class="box">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-8">
-                        <h2>時給は実力で勝ち取れ。</h2>
-                        <h3>あなたのバイト生活をゲームのように。<br>暇な時間にバイトを入れて、レーティングシステムであなたに見合った時給を提案します。</h3>
+      <% if (msg) { %>
+        <div class="msg_box">
+          <div class="alert alert-danger">
+            <%= msg %>
+          </div>
+        </div>
+      <% } %>
+      <div class="box">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8">
+              <h2>時給は実力で勝ち取れ。</h2>
+              <h3>あなたのバイト生活をゲームのように。<br>暇な時間にバイトを入れて、レーティングシステムであなたに見合った時給を提案します。</h3>
+            </div>
+            <div class="col-sm-4">
+              <div class="panel-heading">
+                  <h4 class="panel-title">Workspotterにログイン</h4>
+              </div>
+              <div class="panel-body">
+                <form class="panel-form" role="form" method="POST" action="/login">
+                  <filedset>
+                    <div class="form-group">
+                      <input class ="form-control form-username" placeholder="Username" name="username" type="text">
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control form-pass" placeholder="Password" name="password" type="password" value="">
                     </div>
                     <div class="col-sm-4">
                         <div class="panel-heading">
