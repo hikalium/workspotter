@@ -14,11 +14,14 @@ var freetimes = [
 
 var jobs = [
 	<% for (var item of jobs) { %>
-		[
-			<%= item.day %>,
-			<%= item.timecode_from %>,
-			<%= item.timecode_to %>
-		],
+		{
+			day: <%= item.day %>,
+			timecode_from: "<%= item.timecode_from %>",
+			timecode_to: "<%= item.timecode_to %>",
+			name: "<%= item.name %>",
+			description: "<%= item.description %>",
+			id: <%= item.id %>,
+		},
 	<% } %>
 ]
 
@@ -33,37 +36,73 @@ onload = function(){
 		tlRow.append(
 				$('<div/>', {class: "tt-timeline col-md-11 col-lg-11", id: "tl" + dayId})
 				);
-		//append('<div class="col-md-11 col-lg-11 tt-timeline">')*/
-
 	}
 	//
-	console.log(freetimes);
 	for(var v of freetimes){
 		var e = $("#tl" + v[0]);
 		var leftStr = (v[1] / timeMax * 100) + "%";
 		var widthStr = ((v[2] - v[1]) / timeMax * 100) + "%";
 		e.append(
-				$("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr})
+				$("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr}));
+/*
 				.append(
 					$("<span>", {class: "badge"}).text(2)))
+*/
 	}
+
 	for(var v of jobs){
-		var e = $("#tl" + v[0]);
-		var leftStr = (v[1] / timeMax * 100) + "%";
-		var widthStr = ((v[2] - v[1]) / timeMax * 100) + "%";
+		var e = $("#tl" + v.day);
+		var leftStr = (v.timecode_from / timeMax * 100) + "%";
+		var widthStr = ((v.timecode_to - v.timecode_from) / timeMax * 100) + "%";
 		e.append(
 				$("<div>", {class: "tt-jobs", style: "left:" + leftStr, width: widthStr}))
 	}
+
+	var jobRow = $("#jobs");
+	for(var i = 1; i < 8; i++){
+		var dayId = i % 7;
+		var dayStr = days[dayId];
+		var jobsDiv = $('<div>');
+		jobsDiv.append($('<h2>', {id: "jobs" + dayId}).text(dayStr + "曜日"));
+		var jobsDivRow = $('<div>', {class: "d-flex flex-wrap"});
+		jobRow.append($('<div/>').append(jobsDiv));
+		var timecode2str = function(tc){
+			return Math.floor(tc / 60) + "時" + tc % 60 + "分";
+		}
+		var durStr = timecode2str(v.timecode_from) + "から" + timecode2str(v.timecode_to);
+		for(var v of jobs){
+			if(v.day != dayId) continue;
+			jobsDivRow.append(`
+<div class"p-2">
+<div class="card" style="width: 20rem;">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-block">
+    <h4 class="card-title">${v.name}</h4>
+    <p class="card-text">${v.description}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Cras justo odio</li>
+    <li class="list-group-item">Dapibus ac facilisis in</li>
+    <li class="list-group-item">Vestibulum at eros</li>
+  </ul>
+  <div class="card-block">
+    <a href="${"./jobinfo?id=" + v.id}" class="btn btn-primary">応募する</a>
+  </div>
+</div>
+</div>
+			`);
+		}
+		jobsDiv.append(jobsDivRow);
+	}
 }
+	
 </script>
 <div class="container">
 <h2>求人タイムライン</h2>
-<div id="tlrow" class="row">
-	<div class="tt-header col-md-1 col-lg-1" style="height: 30px;"></div>
-	<div class="tt-header-top col-md-11 col-lg-11" style="height: 30px;"></div>
-</div>
+<div id="tlrow" class="row"></div>
+<div id="jobs"></div>
 <div>
-<a class="btn btn-primary" href="user_edit">登録情報変更</a>
+	<a class="btn btn-primary" href="user_edit">登録情報変更</a>
 </div>
 </div>
 <% include _footer %>

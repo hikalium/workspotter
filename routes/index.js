@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 		res.status(500).send({ error: 'db fail' });
 		return;
 	  }
-	  db.all("select * from job", (err, jb) => {
+	  db.all("select * from job where exists(select * from freetime where userId = ? and job.day == freetime.day and freetime.timecode_from <= job.timecode_from and job.timecode_to <= freetime.timecode_to)", [req.user.id], (err, jb) => {
 		  if(err){
 			  res.status(500).send({ error: 'db fail' });
 			  return;
