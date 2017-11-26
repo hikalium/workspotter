@@ -16,17 +16,15 @@ router.post('/', function(req, res, next) {
 		res.redirect("/error");
 		return;
 	}
-	db.run("INSERT INTO apply(userId, jobId, status) VALUES(?, ?, 0)", 
+	db.run("INSERT INTO apply(userId, jobId, status) VALUES(?, ?, 0)",
 		[req.user.id, req.body.id],
 	function(err){
 		if(!err){
-			console.log("DB error");
-		res.redirect("/index");
-		return;
+			res.redirect("/index");
+			return;
 		}
-			
+		console.log("DB error " + err);
 		res.redirect("/error");
-	
 	});
 });
 

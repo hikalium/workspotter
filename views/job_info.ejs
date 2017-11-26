@@ -26,11 +26,18 @@
       <p class="card-text"><%= job.pay %></p>
     </div>
   </div>
-  <form method="POST" action="/apply" class="apply_btn">
-    <input type="hidden" name="id" value="<%= job.id %>">
-    <div class="form-group">
-      <button class="btn btn-primary btn-lg btn-block" class="form-control" type="submit">応募する</button>
+  <div class="row apply_btn">
+    <div class="col-sm-4">
+      <button onclick="location.href='/index'" class="btn btn-secondary btn-lg btn-block" class="form-control" type="submit">一覧に戻る</button>
     </div>
-  </form>
+    <div class="col-sm-8">
+      <form method="POST" action="/apply">
+        <input type="hidden" name="id" value="<%= job.id %>">
+        <div class="form-group">
+          <button class="btn btn-primary btn-lg btn-block" class="form-control" >応募する</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 <% include _footer %>
