@@ -30,7 +30,6 @@ router.post('/', function(req, res, next){
     delete req.body["applyId"];
     var eval = req.body;
 
-
     console.log(eval);
 
     db.get('SELECT * FROM apply WHERE id=?', applyId, function(err, row){
@@ -38,7 +37,7 @@ router.post('/', function(req, res, next){
 
         Object.keys(eval).forEach(function (key) {
             db.get('SELECT * FROM rate WHERE userId = ? AND categoryId = ?', [userId, key], function (err, row) {
-                
+
             });
         });
     });
