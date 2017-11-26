@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
     var type = "";
     var assign = {};
     var userId = req.user.id;
-//    console.log(req);
+    console.log(userId);
 
     switch (status) {
         case 'apply_complete':
@@ -28,18 +28,46 @@ router.get('/', function(req, res, next) {
     assign['msg']['type'] = type;
     assign['userId'] = userId;
 
-    var strSQL = "SELECT * FROM job WHERE userId = " + userId + " AND isRecruitingFlg = '1'";
+    var strSQL = "SELECT * FROM job WHERE userId = " + userId + " AND isRecruitingFlg = 1";
     db.all(strSQL, (err, row) => {
         if(err){
             res.status(500).send({ error: 'db fail' });
             return;
         }
-        console.log(row);
-        assign['recruitingJobs'] = row;
+        var obj = {};
+        var ids = [];
+        for (r of row) {
+            obj[r.id] = r;
+            ids.push(r.id);
+        }
+        assign['recruitingJobs'] = obj;
 
-        console.log(assign);
+        strSQL = "SELECT * FROM apply WHERE status = 0 AND jobId IN (" + ids.join([separator = ',']) + ")";
+        db.all(strSQL, (err, row) => {
+            if(err){
+                res.status(500).send({ error: 'db fail' });
+                return;
+            }
+            assign['apply'] = row;
+            var uids = [];
+            for (r of row) {
+                uids.push(r.userId);
+            }
 
-        res.render('dashboard', assign);
+            strSQL = "SELECT * FROM user WHERE userId IN (" + uids.join([separator = ',']) + ")";
+            db.all(strSQL, (err, row) => {
+                if(err){
+                    res.status(500).send({ error: 'db fail' });
+                    return;
+                }
+                obj = {};
+                for (r of row) {
+                    obj[r.id] = r;
+                }
+                assign['user'] = obj;
+                res.render('dashboard', assign);
+            });
+        });
     });
 
     //res.render('dashboard', {});
