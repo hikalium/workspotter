@@ -48,13 +48,22 @@ function showApplicant(req, res, next) {
       }
       assign['user'] = row[0];
 
-      strSQL = "SELECT * FROM rate WHERE userId = ?";
+      strSQL = "SELECT * FROM rate WHERE userId = ? ORDER BY created_at DESC";
       db.all(strSQL, [userId], (err, row) => {
         if (err) {
           res.status(500).send({ error: 'db fail3' });
           return;
         }
-        assign['rates'] = row;
+        assign['rates'] = [];
+        var used = {};
+        for (r of row) {
+          if (used[r.categoryId]) {
+            continue;
+          } else {
+            used[r.categoryId] = true;
+          }
+          assign['rates'].push(r);
+        }
 
         strSQL = "SELECT * FROM job WHERE id = ?";
         db.all(strSQL, [jobId], (err, row) => {
