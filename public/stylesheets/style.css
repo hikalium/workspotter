@@ -3,26 +3,19 @@ html, body{
 }
 
 body{
-	background: #bfd3c1;
-	color: rgb(1, 41, 39);
-	font-family: 'mgenplus-p-w', 'Noto Sans CJK JP', '源ノ角ゴシック', 'Source Han Sans', '源真ゴシック', 'GenShinGothic', 'M+ 2c', 'Mgen+ 2c', 'Hiragino Sans', 'ヒラギノ角ゴシック', 'ヒラギノ角ゴ Pro W3' ,'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'GenShinGothic-w', sans-serif;
+  padding-top: 90px;
+	color: rgb(0, 20, 19);
   font-weight: 400;
   text-align: center;
+  background-image: url(https://www.fastpic.jp/images.php?file=4922122921.jpg);
 }
 
-header{
-  height: 8%;
-  padding: 0.5% 0;
-  background-color: #ffffffa6;
-  margin-bottom: 1%;
+.navbar{
+  background-color: rgba(158, 158, 158, 0.856);
 }
 
-#logo{
-  background: url("/images/logo.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: auto;
-  height: 100%;
+.page{
+  background-color: rgba(255, 255, 255, 0.774);
 }
 
 .tt-header-top{
