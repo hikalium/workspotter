@@ -2,7 +2,7 @@
 <div class="container">
   <h2>仕事登録</h2>
   <form method="post" action="/job_edit">
-    <table class="table table-inverse form-tbl">
+    <table class="table table-inverse form-tbl" style="width: 60%; margin: 20px auto;">
       <tr>
         <th>会社名<th>
         <td><input type="text" name="companyName" value="" /></td>
@@ -30,6 +30,28 @@
       <tr>
         <th>ParamC<th>
         <td><input type="number" name="paramC" value="" /></td>
+      </tr>
+      <tr>
+        <th>曜日<th>
+        <td>
+            <select name="day">
+                <option value="0">日</option>
+                <option value="1">月</option>
+                <option value="2">火</option>
+                <option value="3">水</option>
+                <option value="4">木</option>
+                <option value="5">金</option>
+                <option value="6">土</option>
+            </select>
+        </td>
+      </tr>
+      <tr>
+        <th>開始時間<th>
+        <td><input type="time" name="startTime" step="1" value="" /></td>
+      </tr>
+      <tr>
+        <th>終了時間<th>
+        <td><input type="time" name="endTime" step="1" value="" /></td>
       </tr>
     </table>
     <button type="submit" class="btn btn-primary">追加</button>
