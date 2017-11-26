@@ -27,13 +27,13 @@
           <th>概要</th>
         </tr>
       </thead>
-      <% recruitingJobs.forEach(function (job, key) { %>
+      <% for(var job of recruitingJobs) { %>
         <tr>
           <th width="5%"><%= job.id %></th>
           <td width="40%"><%= job.name %></td>
-          <td><%= j.description %></td>
+          <td><%= job.description %></td>
         </tr>
-      <% }); %>
+      <% }; %>
     </table>
   <% } else { %>
     <p>現在求人はしていません。</p>

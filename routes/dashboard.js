@@ -6,6 +6,10 @@ var db = new sqlite3.Database('workspotter.sqlite3');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+	if(!req.user){
+		res.redirect("/login");
+		return;
+	}
     var status = req.query.status;
     var content = "";
     var type = "";
@@ -28,8 +32,8 @@ router.get('/', function(req, res, next) {
     assign['msg']['type'] = type;
     assign['userId'] = userId;
 
-    var strSQL = "SELECT * FROM job WHERE userId = " + userId + " AND isRecruitingFlg = 1";
-    db.all(strSQL, (err, row) => {
+    var strSQL = "SELECT * FROM job WHERE userId = ? AND isRecruitingFlg = 1";
+    db.all(strSQL, [userId], (err, row) => {
         if(err){
             res.status(500).send({ error: 'db fail' });
             return;
@@ -40,7 +44,8 @@ router.get('/', function(req, res, next) {
             obj[r.id] = r;
             ids.push(r.id);
         }
-        assign['recruitingJobs'] = obj;
+		console.log(obj.length);
+        assign['recruitingJobs'] = row;
 
         strSQL = "SELECT * FROM apply WHERE status = 0 AND jobId IN (" + ids.join([separator = ',']) + ")";
         db.all(strSQL, (err, row) => {
