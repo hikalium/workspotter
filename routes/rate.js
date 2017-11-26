@@ -64,7 +64,7 @@ router.post('/', function(req, res, next){
                 //var categoryId = rateRows.categoryId;
                 var categoryId = 4;
                 //var rate = rateRows.rate;
-                var rate = 130;
+                var rate = 500;
 				var ep = req.body[categoryId];
 				console.log(categoryId);
                 console.log(ep);
