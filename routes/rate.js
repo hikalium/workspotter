@@ -5,46 +5,43 @@ var sqlite3 = require('sqlite3');
 var db = new sqlite3.Database('./workspotter.sqlite3');
 
 function getRate(curRate, reqRate, jobEval){
-  return curRate;
+    return curRate;
 }
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var applyId = req.query.applyId;
+    var applyId = req.query.applyId;
 
-  db.all("SELECT * FROM category", function (err, rows) {
-    var categorys = [];
-    for(var i=0; i<rows.length; i++){
-      categorys.push(rows[i].name);
-    }
-    res.render('rate',{'applyId': applyId, 'categorys': categorys, 'title': '仕事の評価'});
-  });
+    db.all("SELECT * FROM category", function (err, rows) {
+        var categoryId = {};
+        var categoryName = [];
+        for(var i=0; i<rows.length; i++){
+            categoryName.push(rows[i].name);
+
+            categoryId[rows[i].name] = rows[i].id;
+        }
+
+        res.render('rate',{'applyId': applyId, 'categoryId': categoryId, 'categoryName': categoryName, 'title': '仕事の評価'});
+    });
 });
 
 router.post('/', function(req, res, next){
-  var applyId = req.query.applyId;
-  var eval = req.body.eval;
+    var applyId = req.body.applyId;
+    delete req.body["applyId"];
+    var eval = req.body;
 
-  db.all('SELECT * FROM apply WHERE id=?',applyId,function(err,rows){
-    var jobId = rows[0].jobId;
-    var userId = rows[0].userId;
 
-    var sqlstr = "";
-    sqlstr += 'SELECT * FROM category ';
-    sqlstr += 'INNER JOIN reqrate ON categoryId=category.id AND jobId=? ';
-    sqlstr += 'INNER JOIN rate ON categoryId=category.id AND userId=?';
+    console.log(eval);
 
-    db.serialize(function(){
-      var stmt = db.prepare("INSERT INTO jobeval(applyId, categoryId, eval) VALUES (?, ?, ?)");
-      db.each(sqlstr,jobId,userId,function (err, row) {
-        stmt.run(applyId, row.id, eval);
-        db.run("UPDATE rate SET rate=? WHERE userId=? AND categoryId=?",getRate(row.rate, row.reqRate,eval),userId,row.id);
-      });
-      stmt.finalize();
+    db.get('SELECT * FROM apply WHERE id=?', applyId, function(err, row){
+        var userId = row.userId;
+
+        Object.keys(eval).forEach(function (key) {
+            db.get('SELECT * FROM rate WHERE userId = ? AND categoryId = ?', [userId, key], function (err, row) {
+                
+            });
+        });
     });
-  
-    res.redirect('/dashboard?status=eval_complete');
-  });
 });
 
 module.exports = router;
