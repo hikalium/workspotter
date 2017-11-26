@@ -69,7 +69,9 @@ router.post('/', function(req, res, next){
 				console.log(categoryId);
                 console.log(ep);
                 if (ep) {
-                    var newrate = 0.1 * (jobRow.payParamC + (10 - parseInt(ep)) * rate) * k + (1.0 - k) * rate
+                    //var newrate = 0.1 * (jobRow.payParamC + (10 - parseInt(ep)) * rate) * k + (1.0 - k) * rate
+                    //var newrate = 0.1 * (jobRow.payParamC + (10 - parseInt(ep)) * rate) * k + (1.0 - k) * rate
+					var newrate = 578;
                     console.log(newrate);
 
                     db.run('INSERT INTO rate(userId, categoryId, rate, created_at) VALUES(?, ?, ?, datetime(\'now\', \'localtime\'))', [
