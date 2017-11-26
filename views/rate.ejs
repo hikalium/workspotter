@@ -3,17 +3,18 @@
     <div class = "panel-heading">
         <h4 class = "panel-title">Evaluation</h4>
     </div>
-    
+
     <div class = "panel-body">
-        <form class ="panel-form" method = "POST" action="/rate?applyId=<%= applyId %>">
+        <form class ="panel-form" method = "POST" action="/rate">
+            <input type="hidden" name="applyId" value=<%= applyId %>></input>
             <filedset>
-                <% categorys.forEach(function(category){ %>
+                <% categoryName.forEach(function(category){ %>
                 <h5 style="margin: 5px 0"><%= category %></h5>
                 <div class="btn-group" data-toggle="buttons">
                     <% for (var i = 0; i < 10; i++) {if(i===0){ %>
                     <label class="btn btn-success active" style="border: #bfd3c1 1px solid;"><% }else{ %>
                     <label class="btn btn-success" style="border: #bfd3c1 1px solid;"><% } %>
-                        <input type="radio" name="<%= category %>" autocomplete="off" value="<%= i %>"> <%= i %>
+                        <input type="radio" name="<%= categoryId[category] %>" autocomplete="off" value="<%= i %>"> <%= i %>
                     </label><% } %>
                 </div>
                 <% }); %>
