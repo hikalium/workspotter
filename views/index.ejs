@@ -1,28 +1,5 @@
 <% include _header %>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2013',  1000,      400],
-          ['2014',  1170,      460],
-          ['2015',  660,       1120],
-          ['2016',  1030,      540]
-        ]);
-
-        var options = {
-          title: 'Company Performance',
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0}
-        };
-
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-</script>
 <script>
 var days = ["日", "月", "火", "水", "木", "金", "土"];
 var timeMax = 24 * 60;
@@ -68,6 +45,11 @@ function goToByScroll(id){
 }
 
 onload = function(){
+$(window).resize(function(){
+  drawRateChart();
+});
+drawRateChart();
+
 	var tlRow = $("#tlrow");
 	for(var i = 1; i < 8; i++){
 		var dayId = i % 7;
@@ -79,6 +61,9 @@ onload = function(){
 				$('<div/>', {class: "tt-timeline col-md-11 col-lg-11", id: "tl" + dayId})
 					.click(function(e){
                         var targetId = e.target.id.replace("tl", "");
+                        if (!targetId) {
+                            targetId = e.target.parentElement.id.replace("tl", "");
+                        }
 						goToByScroll("jobs" + targetId);
 					})
 				);
@@ -88,8 +73,7 @@ onload = function(){
 		var e = $("#tl" + v[0]);
 		var leftStr = (v[1] / timeMax * 100) + "%";
 		var widthStr = ((v[2] - v[1]) / timeMax * 100) + "%";
-		e.append(
-				$("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr}));
+		e.append($("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr}));
 /*
 				.append(
 					$("<span>", {class: "badge"}).text(2)))
@@ -142,6 +126,55 @@ onload = function(){
 	}
 }
 
+</script>
+<script type="text/javascript">
+function drawRateChart(){
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+		var names = [];
+		var lastValue = {};
+		for(var e of rates){
+			var found = 0;
+			for(var k of names){
+				if(k == e.name) found = 1;
+			}
+			if(!found){
+				names.push(e.name);
+			}
+		}
+		var data = new google.visualization.DataTable();
+		data.addColumn('date', '日時');
+		for(var e of names){
+			data.addColumn('number', e);
+		}
+		var ary = [];
+		for(var e of rates){
+			var row = [new Date(e.created_at)];
+			for(var k of names){
+				if(k == e.name){
+					row.push(parseInt(e.rate));
+					lastValue[k] = parseInt(e.rate);
+				} else{
+	 row.push(null);
+				}
+			}
+			ary.push(row);
+		}
+		console.log(ary);
+		data.addRows(ary);
+        var options = {
+          title: 'レーティング推移',
+          hAxis: {title: '日付',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0},
+		  interpolateNulls: true,
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+}
 </script>
 <div class="container">
 <% if (msg) { %>
