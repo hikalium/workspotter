@@ -17,13 +17,15 @@
   <div class="card job-info">
     <h3 class="card-header">必要レート</h3>
     <div class="card-body">
-      <p class="card-text"><%= job.reqrate %></p>
+      <% for(row of reqrates){ %>
+      <p class="card-text"><%= row.name %>: <%= row.reqRate %></p>
+      <% } %>
     </div>
   </div>
   <div class="card job-info">
     <h3 class="card-header">時給</h3>
     <div class="card-body">
-      <p class="card-text"><%= job.pay %></p>
+      <p class="card-text"><%= pay %></p>
     </div>
   </div>
   <div class="row apply_btn">
