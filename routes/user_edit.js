@@ -22,13 +22,15 @@ showFreeTimeList(req, res, next);
 
 router.post('/', function(req, res, next) {
 	console.log(req.body);
-	db.run("INSERT INTO freetime(userId, day, from_hour, from_minute, to_hour, to_minute) VALUES (?, ?, ?, ?, ?, ?)", [
-		0,
+	db.run("INSERT INTO freetime(userId, day, timecode_from, timecode_to) VALUES (?, ?, ?, ?)", [
+		req.user.id,
 		req.body.day,
-		req.body.from_h,
-		req.body.from_m,
-	req.body.to_h,
-	req.body.to_m]);
+		req.body.from_h * 60 + 
+		parseInt(req.body.from_m),
+	req.body.to_h * 60 +
+	parseInt(req.body.to_m)]);
+	console.log([req.body.from_h * 60 +req.body.from_m, req.body.to_h * 60 + req.body.to_m])
+	console.log([req.body.from_h, req.body.from_m, req.body.to_h, req.body.to_m])
 showFreeTimeList(req, res, next);
 });
 
