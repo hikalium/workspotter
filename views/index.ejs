@@ -91,8 +91,7 @@ onload = function(){
 		var e = $("#tl" + v[0]);
 		var leftStr = (v[1] / timeMax * 100) + "%";
 		var widthStr = ((v[2] - v[1]) / timeMax * 100) + "%";
-		e.append(r
-				$("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr}));
+		e.append($("<div>", {class: "tt-freetime", style: "left:" + leftStr, width: widthStr}));
 /*
 				.append(
 					$("<span>", {class: "badge"}).text(2)))
