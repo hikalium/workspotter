@@ -12,17 +12,35 @@ function getRate(curRate, reqRate, jobEval){
 router.get('/', function(req, res, next) {
     var applyId = req.query.applyId;
 
-    db.all("SELECT * FROM category", function (err, rows) {
-        var categoryId = {};
-        var categoryName = [];
-        for(var i=0; i < rows.length; i++){
-            categoryName.push(rows[i].name);
+    db.all("SELECT * FROM apply WHERE id = ?", applyId, function (err, row) {
+        db.all("SELECT * FROM reqrate WHERE jobId = ?", row[0].jobId, function (err, reqrateRow) {
+            db.all("SELECT * FROM category WHERE id = ?", reqrateRow[0].categoryId, function (err, cRow) {
+                var categoryId = {};
+                var categoryName = [];
 
-            categoryId[rows[i].name] = rows[i].id;
-        }
+                categoryId[cRow[0].id] = cRow[0].name
+                categoryName.push(cRow[0].name);
 
-        res.render('rate',{'applyId': applyId, 'categoryId': categoryId, 'categoryName': categoryName, 'title': '仕事の評価'});
+                console.log(categoryId);
+                console.log(categoryName);
+
+                res.render('rate',{'applyId': applyId, 'categoryId': categoryId, 'categoryName': categoryName, 'title': '仕事の評価'});
+            });
+        });
     });
+
+
+    // db.all("SELECT * FROM category", function (err, rows) {
+    //     var categoryId = {};
+    //     var categoryName = [];
+    //     for(var i=0; i < rows.length; i++){
+    //         categoryName.push(rows[i].name);
+    //
+    //         categoryId[rows[i].name] = rows[i].id;
+    //     }
+    //
+    //     res.render('rate',{'applyId': applyId, 'categoryId': categoryId, 'categoryName': categoryName, 'title': '仕事の評価'});
+    // });
 });
 
 router.post('/', function(req, res, next){
@@ -30,6 +48,7 @@ router.post('/', function(req, res, next){
     delete req.body["applyId"];
     var eval = req.body;
 
+    db.run("UPDATE apply set status = 3 WHERE id = ?", applyId);
 
     db.get('SELECT * FROM apply WHERE id=?', applyId, function(err, row){
         var userId = row.userId;
@@ -40,20 +59,38 @@ router.post('/', function(req, res, next){
                 var newrate;
                 var k = 0.2
 
-                rateRows.forEach(function (e) {
-                    if (eval[e.categoryId]) {
+                console.log(rateRows);
 
-                        newrate = 0.1 * (jobRow.payParamC + (10 - eval[e.categoryId]) * e.rate) * k + (1.0 - k) * e.rate
+                var categoryId = rateRows.categoryId;
+                var rate = rateRows.rate;
 
-                        db.run('INSERT INTO RATE(userId, categoryId, rate, created_at) VALUES(?, ?, ?, ?)', [
-                            userId,
-                            e.categoryId,
-                            newrate,
-                            datetime('now', 'localtime')
-                        ]);
+                if (eval[categoryId]) {
+                    newrate = 0.1 * (jobRow.payParamC + (10 - eval[categoryId]) * rate) * k + (1.0 - k) * rate
 
-                    }
-                });
+                    db.run('INSERT INTO RATE(userId, categoryId, rate, created_at) VALUES(?, ?, ?, ?)', [
+                        userId,
+                        categoryId,
+                        newrate,
+                        datetime('now', 'localtime')
+                    ]);
+                }
+
+                res.redirect("/dashboard?status=rate_complete");
+
+                // rateRows.forEach(function (e) {
+                //     if (eval[e.categoryId]) {
+                //
+                //         newrate = 0.1 * (jobRow.payParamC + (10 - eval[e.categoryId]) * e.rate) * k + (1.0 - k) * e.rate
+                //
+                //         db.run('INSERT INTO RATE(userId, categoryId, rate, created_at) VALUES(?, ?, ?, ?)', [
+                //             userId,
+                //             e.categoryId,
+                //             newrate,
+                //             datetime('now', 'localtime')
+                //         ]);
+                //
+                //     }
+                // });
             });
         });
     });
