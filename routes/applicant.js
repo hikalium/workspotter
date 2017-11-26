@@ -48,13 +48,22 @@ function showApplicant(req, res, next) {
       }
       assign['user'] = row[0];
 
-      strSQL = "SELECT * FROM rate WHERE userId = ?";
+      strSQL = "SELECT * FROM rate WHERE userId = ? ORDER BY created_at DESC";
       db.all(strSQL, [userId], (err, row) => {
         if (err) {
           res.status(500).send({ error: 'db fail3' });
           return;
         }
-        assign['rates'] = row;
+        assign['rates'] = [];
+        var used = {};
+        for (r of row) {
+          if (used[r.categoryId]) {
+            continue;
+          } else {
+            used[r.categoryId] = true;
+          }
+          assign['rates'].push(r);
+        }
 
         strSQL = "SELECT * FROM job WHERE id = ?";
         db.all(strSQL, [jobId], (err, row) => {
@@ -62,6 +71,7 @@ function showApplicant(req, res, next) {
             res.status(500).send({ error: 'db fail4' });
             return;
           }
+          var reqrateId = row[0].primaryRateId;
           assign['job'] = row[0];
 
           strSQL = "SELECT * FROM category";
@@ -75,8 +85,18 @@ function showApplicant(req, res, next) {
               categories[r.id] = r;
             }
             assign['category'] = categories;
-            console.log(assign);
-            res.render('applicant', assign);
+
+            strSQL = "SELECT * FROM reqrate WHERE id = ?";
+            db.all(strSQL, [reqrateId], (err, row) => {
+              if (err) {
+                res.status(500).send({ error: 'db fail6' });
+                return;
+              }
+              assign['jobMainCategoryId'] = row[0].categoryId;
+
+              console.log(assign);
+              res.render('applicant', assign);
+            });
           });
         });
       });
