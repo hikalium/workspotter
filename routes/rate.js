@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
                 var categoryId = {};
                 var categoryName = [];
 
-                categoryId[cRow[0].id] = cRow[0].name
+                categoryId[cRow[0].name] = cRow[0].id;
                 categoryName.push(cRow[0].name);
 
                 console.log(categoryId);
@@ -56,7 +56,6 @@ router.post('/', function(req, res, next){
 
         db.get('SELECT * FROM rate WHERE userId = ?', userId, function (err, rateRows) {
             db.get('SELECT * FROM job WHERE id = ?', jobId, function (err, jobRow) {
-                var newrate;
                 var k = 0.2
 
                 console.log(rateRows);
@@ -64,14 +63,15 @@ router.post('/', function(req, res, next){
                 var categoryId = rateRows.categoryId;
                 var rate = rateRows.rate;
 
+                console.log(eval[categoryId]);
                 if (eval[categoryId]) {
-                    newrate = 0.1 * (jobRow.payParamC + (10 - eval[categoryId]) * rate) * k + (1.0 - k) * rate
+                    var newrate = 0.1 * (jobRow.payParamC + (10 - parseInt(eval[categoryId])) * rate) * k + (1.0 - k) * rate
+                    console.log(newrate);
 
-                    db.run('INSERT INTO RATE(userId, categoryId, rate, created_at) VALUES(?, ?, ?, ?)', [
+                    db.run('INSERT INTO RATE(userId, categoryId, rate, created_at) VALUES(?, ?, ?, datetime(\'now\', \'localtime\'))', [
                         userId,
                         categoryId,
-                        newrate,
-                        datetime('now', 'localtime')
+                        newrate
                     ]);
                 }
 

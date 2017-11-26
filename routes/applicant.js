@@ -93,6 +93,7 @@ function showApplicant(req, res, next) {
                 res.status(500).send({ error: 'db fail6' });
                 return;
               }
+              console.log(reqrateId);
               assign['jobMainCategoryId'] = row[0].categoryId;
 
               console.log(assign);
