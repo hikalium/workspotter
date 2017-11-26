@@ -10,7 +10,11 @@ var db = new sqlite3.Database('./workspotter.sqlite3');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('login');
+    var msg = "";
+    if (req.query.fail == '1') {
+        msg = 'ログインできませんでした。ユーザー名かパスワードが不正です。';
+    }
+    res.render('login', { 'msg': msg });
 });
 
 router.get('/register_user', function(req, res, next) {
@@ -43,7 +47,7 @@ passport.deserializeUser(function(user, done) {
 
 router.post('/',
     passport.authenticate('local', {
-        failureRedirect: '',
+        failureRedirect: '/login?fail=1',
         successRedirect: '/index',
     })
 );

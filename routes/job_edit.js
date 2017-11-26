@@ -4,10 +4,13 @@ var router = express.Router();
 const sqlite3 = require('sqlite3');
 var db = new sqlite3.Database('workspotter.sqlite3');
 
+var userId;
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('job_edit', { });
-  console.log(req.url);
+    userId = req.query.userId
+
+    res.render('job_edit', { });
 });
 
 router.post('/', function (req, res, next) {
@@ -16,7 +19,8 @@ router.post('/', function (req, res, next) {
     console.log(data);
 
     //insert new data
-    db.run('INSERT INTO JOB(name, description, imageUrl, primaryRateId, payParamA, payParamB, payParamC) VALUES(?, ?, ?, ? ,? , ?, ?)', [
+    db.run('INSERT INTO JOB(userId, name, description, imageUrl, primaryRateId, payParamA, payParamB, payParamC) VALUES(?, ?, ?, ?, ?, ?, ?, ?)', [
+        userId,
         data.companyName,
         data.description,
         data.imageUrl,
