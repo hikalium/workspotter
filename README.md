@@ -1,4 +1,9 @@
 # workspotter
+Job matching system based on rating for skills.
+
+This project has been made for #hackerwars5 hackathon and won first prize.
+
+## Test
 ```
 npm install
 npm start
