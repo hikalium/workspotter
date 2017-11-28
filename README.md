@@ -1,7 +1,7 @@
 # workspotter
 Job matching system based on rating for skills.
 
-This project has been made for #hackerwars5 hackathon and won first prize.
+This project has been made for #hackerwars5 hackathon and won the first prize.
 
 ## Test
 ```
